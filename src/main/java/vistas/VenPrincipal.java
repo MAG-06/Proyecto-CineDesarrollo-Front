@@ -6,12 +6,21 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+ feature-MovieFront
+import javax.swing.JOptionPane;
+
 import modelos.Client;
+ develop
 import modelos.Movie;
+import service.MovieServiceFront;
 
 public class VenPrincipal extends javax.swing.JFrame {
     
+ feature-MovieFront
+    private final MovieServiceFront service = new MovieServiceFront();
+
     private Client cliente;
+ develop
 
     public VenPrincipal(Client cliente) {
         initComponents();
@@ -279,52 +288,40 @@ public class VenPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMovie1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovie1ActionPerformed
-        Movie p = new Movie("NOBODY 2", 
-                "A veces, el lugar más peligroso para un padre son unas vacaciones familiares. "
-                + "Bob Odenkirk regresa como el esposo, padre y asesino adicto al trabajo Hutch Mansell en el nuevo capítulo de Nadie, "
-                + "el éxito de acción de 2021 que debutó en el puesto número uno de la taquilla estadounidense. "
-                + "Cuatro años después de enfrentarse accidentalmente a la mafia rusa, "
-                + "Hutch sigue debiéndoles 30 millones de dólares y está pagando su deuda con una interminable "
-                + "serie de trabajos a criminales internacionales.", 
-                "Para mayores de 15 años", 
-                "Bob Odenkirk, Connie Nielsen, John Ortiz, RZA, Colin Hanks, con Christopher Lloyd y Sharon Stone", 
-                "Timo Tjahjanto", 
-                "/imagenes/posterNadie2.jpg", "https://www.youtube.com/watch?v=latAzkdZJO4&ab_channel=RoyalFilms", "89 mins");
+      try{
+       
+        Movie p = service.obtenerMovie("1");
         String usser = txtUserEnSession.getText();
         VenPelicula venPelicula = new VenPelicula(cliente, p);
         venPelicula.setVisible(true);
         this.dispose();
+      } catch(Exception e){
+          JOptionPane.showMessageDialog(null, "Error al cargar pelicula: " + e.getMessage(), "Error ", JOptionPane.ERROR_MESSAGE);
+      }
     }//GEN-LAST:event_btnMovie1ActionPerformed
-
+    
     private void btnMovie2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovie2ActionPerformed
-        Movie p = new Movie("THE CONJURING", "Basada en una historia real documentada por los reputados demonólogos Ed y Lorraine Warren."
-                + " Narra los encuentros sobrenaturales que vivió la familia Perron en su casa de Rhode Island a principios de los 70."
-                + " El matrimonio Warren, investigadores de renombre en el mundo de los fenómenos paranormales,"
-                + " acudieron a la llamada de esta familia aterrorizada por la presencia en su granja de un ser maligno",
-                "Para mayores de 15 años", 
-                "Vera Farmiga, Patrick Wilson, Lil Taylor", 
-                "James Wan", "/imagenes/posterConjuro.jpg", "https://www.youtube.com/watch?v=pZGe0V7_L-Q&ab_channel=RoyalFilms", "112 mins");
+       try{
+        Movie p = service.obtenerMovie("2");
         String usser = txtUserEnSession.getText();
         VenPelicula venPelicula = new VenPelicula(cliente, p);
         venPelicula.setVisible(true);
         this.dispose();       
-        
+       } catch(Exception e){
+           JOptionPane.showMessageDialog(null, "Error al cargar pelicula: " + e.getMessage(), "Error ", JOptionPane.ERROR_MESSAGE);
+       }
     }//GEN-LAST:event_btnMovie2ActionPerformed
 
     private void btnMovie3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovie3ActionPerformed
-        Movie p = new Movie("THE FANTASTIC FOUR: FIRST STEPS", "Con el vibrante telón de fondo de un mundo retro-futurista inspirado en la década de 1960,"
-                + " LOS CUATRO FANTÁSTICOS: PRIMEROS PASOS de Marvel Studios presenta a La Primera Familia de Marvel: Reed Richards / Sr. Fantástico (Pedro Pascal),"
-                + " Sue Storm / Mujer Invisible (Vanessa Kirby), Johnny Storm / La Antorcha Humana (Joseph Quinn) y Ben Grimm / La Mole (Ebon Moss-Bachrach) "
-                + "mientras enfrentan su más grande desafío hasta el momento. Obligados a equilibrar sus roles de héroes con la fuerza de su vínculo familiar, "
-                + "deben defender la Tierra de un voraz dios del espacio llamado Galactus (Ralph Ineson) y su enigmática Heralda, Silver Surfer (Julia Garner). "
-                + "Y si el plan de Galactus de devorar todo el planeta y a todos los que lo habitan no fuera lo suficientemente malo, de repente se vuelve muy personal.",
-                "Para mayores de 7 años",
-                "Pedro Pascal, Vanessa Kirby, Joseph Quinn, Ebon Moss-Bachrach, Ralph Ineson, Julia Garner, Paul Walter Hauser, John Malkovich, Natasha Lyonne, Sarah Niles",
-                "Matt Shakman", "/imagenes/poster4Fantasticos.jpg", "https://www.youtube.com/watch?v=g-a8Db2xea0&ab_channel=RoyalFilms", "115 mins");
+      try{
+        Movie p = service.obtenerMovie("3");
         String usser = txtUserEnSession.getText();
         VenPelicula venPelicula = new VenPelicula(cliente, p);
         venPelicula.setVisible(true);
         this.dispose(); 
+      } catch (Exception e){
+           JOptionPane.showMessageDialog(null, "Error al cargar pelicula: " + e.getMessage(), "Error ", JOptionPane.ERROR_MESSAGE);
+      }
     }//GEN-LAST:event_btnMovie3ActionPerformed
 
     private void btnCombosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombosActionPerformed
