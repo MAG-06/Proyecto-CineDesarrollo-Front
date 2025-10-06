@@ -1,27 +1,24 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package vistas;
 
 import javax.swing.JOptionPane;
+import modelos.Client;
+import service.CarritoServiceFront;
+import javax.swing.SwingWorker;
 
-/**
- *
- * @author Nimac
- */
 public class VenPago extends javax.swing.JFrame {
     
-    private String usser;
+    private Client cliente;
+
+    private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
 
     /**
      * Creates new form VenPago
      */
-    public VenPago(float valorCompra, String usser) {
+    public VenPago(float valorCompra, Client cliente) {
         initComponents();
         lblValorPagar.setText("Su valor a pagar es:" + " " + valorCompra);
         setLocationRelativeTo(this);
-        this.usser = usser;
+        this.cliente = cliente;
     }
 
     /**
@@ -206,18 +203,38 @@ public class VenPago extends javax.swing.JFrame {
 
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         JOptionPane.showMessageDialog(null, "Su pago ha sido exitoso");
-        VenPrincipal venPrincipal = new VenPrincipal(usser);
+        VenPrincipal venPrincipal = new VenPrincipal(cliente);
         venPrincipal.setVisible(true);
         this.dispose();
+        vaciarCarritoYVolver();
     }//GEN-LAST:event_btnPagarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         JOptionPane.showMessageDialog(null, "Transaccion cancelada");
-        VenPrincipal venPrincipal = new VenPrincipal(usser);
+        VenPrincipal venPrincipal = new VenPrincipal(cliente);
         venPrincipal.setVisible(true);
         this.dispose();        
+        vaciarCarritoYVolver();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void vaciarCarritoYVolver() {
+        btnPagar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+
+        new SwingWorker<Boolean, Void>() {
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                return carritoSvc.vaciarCarrito(); // DELETE /api/carrito
+            }
+            @Override
+            protected void done() {
+                try { get(); } catch (Exception ignored) {}
+                VenPrincipal venPrincipal = new VenPrincipal(cliente);
+                venPrincipal.setVisible(true);
+                dispose();
+            }
+        }.execute();
+    }
     /**
      * @param args the command line arguments
      */
@@ -248,7 +265,7 @@ public class VenPago extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VenPago(0, null).setVisible(true);
+                new VenPago(0,null).setVisible(true);
             }
         });
     }
