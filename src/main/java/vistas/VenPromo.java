@@ -347,7 +347,7 @@ public class VenPromo extends javax.swing.JFrame {
 
     private void btnCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarritoActionPerformed
         String usser = txtUserEnSession.getText();
-        VenCarrito venCarrito = new VenCarrito(usser);
+        VenCarrito venCarrito = new VenCarrito(cliente);
         venCarrito.setVisible(true);
     }//GEN-LAST:event_btnCarritoActionPerformed
 

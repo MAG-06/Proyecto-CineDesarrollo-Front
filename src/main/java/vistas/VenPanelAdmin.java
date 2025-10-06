@@ -22,9 +22,9 @@ import service.ComboServiceFront;
  */
 public class VenPanelAdmin extends javax.swing.JFrame {
 
-    private final ClienteServiceFront service = new ClienteServiceFront();
+    private final ClienteServiceFront serviceCliente = new ClienteServiceFront();
 
-    private final ComboServiceFront service = new ComboServiceFront();
+    private final ComboServiceFront serviceCombos = new ComboServiceFront();
     
     public VenPanelAdmin(String usser) {
         initComponents();
@@ -82,14 +82,12 @@ public class VenPanelAdmin extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
-
         jScrollPane4 = new javax.swing.JScrollPane();
         tablaCombo = new javax.swing.JTable();
-
         txtAdminEnSession = new javax.swing.JLabel();
         btnCerrarSesion = new javax.swing.JToggleButton();
         jPanel12 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
+        jScrollPane5 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -207,7 +205,7 @@ public class VenPanelAdmin extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,6 +353,7 @@ public class VenPanelAdmin extends javax.swing.JFrame {
 
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Combos activos");
+        jPanel9.add(jLabel12);
 
         jPanel10.setBackground(new java.awt.Color(51, 51, 51));
 
@@ -400,6 +399,7 @@ public class VenPanelAdmin extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jPanel9.add(jPanel10);
 
         tablaCombo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -413,46 +413,8 @@ public class VenPanelAdmin extends javax.swing.JFrame {
             }
         ));
         jScrollPane4.setViewportView(tablaCombo);
-develop
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-feature-FrontClientev2
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
 
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-
-                        .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel12))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addContainerGap()
-
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(49, Short.MAX_VALUE))
-
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        jPanel9.add(jScrollPane4);
 
         txtAdminEnSession.setForeground(new java.awt.Color(255, 255, 255));
         txtAdminEnSession.setText("jLabel17");
@@ -485,7 +447,7 @@ feature-FrontClientev2
                                 .addComponent(txtAdminEnSession)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 496, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnCerrarSesion)))
                 .addContainerGap())
         );
@@ -521,7 +483,7 @@ feature-FrontClientev2
                 "Cedula", "Nombre", "Edad", "Correo", "Ciudad", "Membresia"
             }
         ));
-        jScrollPane4.setViewportView(tablaClientes);
+        jScrollPane5.setViewportView(tablaClientes);
 
         javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
@@ -529,14 +491,14 @@ feature-FrontClientev2
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 545, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel12Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
@@ -592,7 +554,7 @@ feature-FrontClientev2
             @Override
             protected List<Client> doInBackground() throws Exception {
                 // Llamada BLOQUEANTE al backend (fuera del EDT)
-                return service.listarClientes();
+                return serviceCliente.listarClientes();
             }
             @Override
             protected void done() {
@@ -627,7 +589,7 @@ private void cargarTablaFood() {
             @Override
             protected List<Food> doInBackground() throws Exception {
                 // Llamada BLOQUEANTE al backend (fuera del EDT)
-                return service.listarCombos();
+                return serviceCombos.listarCombos();
             }
             @Override
             protected void done() {
@@ -650,8 +612,8 @@ private void cargarTablaFood() {
                         "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-        }.execute();        
-    }
+        }.execute();
+    }
     
 
     
@@ -713,9 +675,7 @@ private void cargarTablaFood() {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-
     private javax.swing.JPanel jPanel12;
-
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -726,10 +686,8 @@ private void cargarTablaFood() {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-
-    private javax.swing.JScrollPane jScrollPane3;
-
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextField jTextField1;
