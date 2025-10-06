@@ -6,16 +6,19 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import modelos.Client;
 import modelos.Movie;
 
 public class VenPrincipal extends javax.swing.JFrame {
     
-    
+    private Client cliente;
 
-    public VenPrincipal(String usser) {
+    public VenPrincipal(Client cliente) {
         initComponents();
         setLocationRelativeTo(this);
-        txtUserEnSession.setText(usser);
+        this.cliente = cliente;
+        txtUserEnSession.setText(cliente.getNombre());
+        
         
     }
 
@@ -288,7 +291,7 @@ public class VenPrincipal extends javax.swing.JFrame {
                 "Timo Tjahjanto", 
                 "/imagenes/posterNadie2.jpg", "https://www.youtube.com/watch?v=latAzkdZJO4&ab_channel=RoyalFilms", "89 mins");
         String usser = txtUserEnSession.getText();
-        VenPelicula venPelicula = new VenPelicula(usser, p);
+        VenPelicula venPelicula = new VenPelicula(cliente, p);
         venPelicula.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnMovie1ActionPerformed
@@ -302,7 +305,7 @@ public class VenPrincipal extends javax.swing.JFrame {
                 "Vera Farmiga, Patrick Wilson, Lil Taylor", 
                 "James Wan", "/imagenes/posterConjuro.jpg", "https://www.youtube.com/watch?v=pZGe0V7_L-Q&ab_channel=RoyalFilms", "112 mins");
         String usser = txtUserEnSession.getText();
-        VenPelicula venPelicula = new VenPelicula(usser, p);
+        VenPelicula venPelicula = new VenPelicula(cliente, p);
         venPelicula.setVisible(true);
         this.dispose();       
         
@@ -319,21 +322,21 @@ public class VenPrincipal extends javax.swing.JFrame {
                 "Pedro Pascal, Vanessa Kirby, Joseph Quinn, Ebon Moss-Bachrach, Ralph Ineson, Julia Garner, Paul Walter Hauser, John Malkovich, Natasha Lyonne, Sarah Niles",
                 "Matt Shakman", "/imagenes/poster4Fantasticos.jpg", "https://www.youtube.com/watch?v=g-a8Db2xea0&ab_channel=RoyalFilms", "115 mins");
         String usser = txtUserEnSession.getText();
-        VenPelicula venPelicula = new VenPelicula(usser, p);
+        VenPelicula venPelicula = new VenPelicula(cliente, p);
         venPelicula.setVisible(true);
         this.dispose(); 
     }//GEN-LAST:event_btnMovie3ActionPerformed
 
     private void btnCombosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombosActionPerformed
         String usser = txtUserEnSession.getText();
-        VenCombos venCombos = new VenCombos(usser);
+        VenCombos venCombos = new VenCombos(cliente);
         venCombos.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCombosActionPerformed
 
     private void btnMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMembresiaActionPerformed
         String usser = txtUserEnSession.getText();
-        VenMembresia venMembresia = new VenMembresia(usser);
+        VenMembresia venMembresia = new VenMembresia(cliente);
         venMembresia.setVisible(true);
         this.dispose();
         
@@ -341,14 +344,14 @@ public class VenPrincipal extends javax.swing.JFrame {
 
     private void btnPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromocionesActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPromo venPromo = new VenPromo(usser);
+        VenPromo venPromo = new VenPromo(cliente);
         venPromo.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPromocionesActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPerfil venPerfil = new VenPerfil(usser);
+        VenPerfil venPerfil = new VenPerfil(cliente);
         venPerfil.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPerfilActionPerformed

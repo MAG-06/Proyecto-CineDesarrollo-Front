@@ -1,23 +1,24 @@
 package vistas;
 
 import javax.swing.JOptionPane;
+import modelos.Client;
 import service.CarritoServiceFront;
 import javax.swing.SwingWorker;
 
-
 public class VenPago extends javax.swing.JFrame {
     
-    private String usser;
+    private Client cliente;
+
     private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
 
     /**
      * Creates new form VenPago
      */
-    public VenPago(float valorCompra, String usser) {
+    public VenPago(float valorCompra, Client cliente) {
         initComponents();
         lblValorPagar.setText("Su valor a pagar es:" + " " + valorCompra);
         setLocationRelativeTo(this);
-        this.usser = usser;
+        this.cliente = cliente;
     }
 
     /**
@@ -202,7 +203,7 @@ public class VenPago extends javax.swing.JFrame {
 
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
         JOptionPane.showMessageDialog(null, "Su pago ha sido exitoso");
-        VenPrincipal venPrincipal = new VenPrincipal(usser);
+        VenPrincipal venPrincipal = new VenPrincipal(cliente);
         venPrincipal.setVisible(true);
         this.dispose();
         vaciarCarritoYVolver();
@@ -210,7 +211,7 @@ public class VenPago extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         JOptionPane.showMessageDialog(null, "Transaccion cancelada");
-        VenPrincipal venPrincipal = new VenPrincipal(usser);
+        VenPrincipal venPrincipal = new VenPrincipal(cliente);
         venPrincipal.setVisible(true);
         this.dispose();        
         vaciarCarritoYVolver();
@@ -228,7 +229,7 @@ public class VenPago extends javax.swing.JFrame {
             @Override
             protected void done() {
                 try { get(); } catch (Exception ignored) {}
-                VenPrincipal venPrincipal = new VenPrincipal(usser);
+                VenPrincipal venPrincipal = new VenPrincipal(cliente);
                 venPrincipal.setVisible(true);
                 dispose();
             }
