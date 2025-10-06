@@ -4,15 +4,18 @@ import java.awt.Image;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import modelos.Client;
 
 
 public class VenPromo1 extends javax.swing.JFrame {
-
     
-    public VenPromo1(String usser) {
+    private Client cliente;
+    
+    public VenPromo1(Client cliente) {
         initComponents();
         setLocationRelativeTo(this);
-        txtUserEnSession.setText(usser);
+        this.cliente = cliente;
+        txtUserEnSession.setText(cliente.getNombre());
     }
 
     
@@ -244,35 +247,35 @@ public class VenPromo1 extends javax.swing.JFrame {
 
     private void btnCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarteleraActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPrincipal venPrincipal = new VenPrincipal(usser);
+        VenPrincipal venPrincipal = new VenPrincipal(cliente);
         venPrincipal.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCarteleraActionPerformed
 
     private void btnMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMembresiaActionPerformed
         String usser = txtUserEnSession.getText();
-        VenMembresia venMembresia = new VenMembresia(usser);
+        VenMembresia venMembresia = new VenMembresia(cliente);
         venMembresia.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnMembresiaActionPerformed
 
     private void btnCombosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombosActionPerformed
         String usser = txtUserEnSession.getText();
-        VenCombos venCombos = new VenCombos(usser);
+        VenCombos venCombos = new VenCombos(cliente);
         venCombos.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCombosActionPerformed
 
     private void btnPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromocionesActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPromo venPromo = new VenPromo(usser);
+        VenPromo venPromo = new VenPromo(cliente);
         venPromo.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPromocionesActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPerfil venPerfil = new VenPerfil(usser);
+        VenPerfil venPerfil = new VenPerfil(cliente);
         venPerfil.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPerfilActionPerformed
@@ -284,7 +287,7 @@ public class VenPromo1 extends javax.swing.JFrame {
 
     private void btnCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarritoActionPerformed
         String usser = txtUserEnSession.getText();
-        VenCarrito venCarrito = new VenCarrito(usser);
+        VenCarrito venCarrito = new VenCarrito(cliente);
         venCarrito.setVisible(true);
     }//GEN-LAST:event_btnCarritoActionPerformed
 
