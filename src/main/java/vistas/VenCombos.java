@@ -1,18 +1,13 @@
 package vistas;
 
-import modelos.Food;
-
-
-
+import service.CarritoServiceFront;
+import modelos.Car;
 import javax.swing.JOptionPane;
-import javax.swing.SwingUtilities;
-import java.util.List;
-import api.ComboApiService;
+import javax.swing.SwingWorker;
 
 public class VenCombos extends javax.swing.JFrame {    
     
-
-
+    private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
 
     public VenCombos(String usser) {
         initComponents();
@@ -348,7 +343,7 @@ public class VenCombos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPromocionesActionPerformed
 
     private void btnCombo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo1ActionPerformed
-      
+      agregarAlCarritoAsync(1);
     }//GEN-LAST:event_btnCombo1ActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
@@ -364,30 +359,59 @@ public class VenCombos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBotActionPerformed
 
     private void btnCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarritoActionPerformed
-        VenCarrito venCarrito = new VenCarrito();
+        String usser = txtUserEnSession.getText();
+        VenCarrito venCarrito = new VenCarrito(usser);
         venCarrito.setVisible(true);
     }//GEN-LAST:event_btnCarritoActionPerformed
 
     private void btnCombo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo2ActionPerformed
-     
+     agregarAlCarritoAsync(2);
     }//GEN-LAST:event_btnCombo2ActionPerformed
 
     private void btnCombo3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo3ActionPerformed
-      
+      agregarAlCarritoAsync(3);
     }//GEN-LAST:event_btnCombo3ActionPerformed
 
     private void btnCombo4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo4ActionPerformed
-     
+     agregarAlCarritoAsync(4);
     }//GEN-LAST:event_btnCombo4ActionPerformed
 
     private void btnCombo5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo5ActionPerformed
-       
+       agregarAlCarritoAsync(5);
     }//GEN-LAST:event_btnCombo5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-       
+       agregarAlCarritoAsync(6);
     }//GEN-LAST:event_jButton6ActionPerformed
-
+    
+    private void agregarAlCarritoAsync(int idCombo) {
+        new SwingWorker<Boolean, Void>() {
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                return carritoSvc.agregarCombo(idCombo);
+            }
+            @Override
+            protected void done() {
+                try {
+                    boolean ok = get();
+                    if (ok) {
+                        Car c = carritoSvc.obtenerCarrito();
+                        double total = (c != null) ? c.getPrecioFinal() : 0.0;
+                        JOptionPane.showMessageDialog(VenCombos.this,
+                            "Combo agregado al carrito.\nTotal actual: $ " + (long) total);
+                    } else {
+                        JOptionPane.showMessageDialog(VenCombos.this,
+                            "No se pudo agregar el combo", "Aviso",
+                            JOptionPane.WARNING_MESSAGE);
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(VenCombos.this,
+                        "Error: " + ex.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }.execute();
+    }
   
     
     public static void main(String args[]) {

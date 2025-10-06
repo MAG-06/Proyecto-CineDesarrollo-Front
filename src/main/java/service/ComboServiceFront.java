@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package service;
 
 import api.ApiCombos;
@@ -35,18 +31,17 @@ public class ComboServiceFront {
         Call<Food> call = api.getById(id);
         Response<Food> response = call.execute();
         if (response.isSuccessful()) {
-            return response.body();          // 200 OK
+            return response.body();          
         }
         if (response.code() == 404) {
-            return null;                     // no existe
+            return null;                     
         }
-        return null;                         // otros códigos: puedes manejar según tu necesidad
+        return null;                         
     }
 
     public boolean crearCombo(Food food) throws IOException {
         Call<Void> call = api.create(food);
         Response<Void> response = call.execute();
-        // El controlador devuelve 201 Created; cualquier 2xx cuenta como éxito
         return response.isSuccessful();
     }    
     
