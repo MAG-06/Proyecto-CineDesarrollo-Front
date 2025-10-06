@@ -3,6 +3,7 @@ package api;
 import java.util.List;
 import modelos.Car;
 import modelos.Food;
+import modelos.Ticket;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -29,5 +30,14 @@ public interface CarritoApiService {
 
     @DELETE("api/carrito")
     Call<Void> vaciarCarrito();
+    
+    @GET("api/carrito/entradas")
+    Call<List<Ticket>> listarEntradas();
+
+    @POST("api/carrito/entradas/{numSala}/{numSilla}")
+    Call<Void> agregarEntrada(@Path("numSala") int numSala, @Path("numSilla") int numSilla);
+
+    @DELETE("api/carrito/entradas/{numEntrada}")
+    Call<Void> eliminarEntrada(@Path("numEntrada") int numEntrada);
     
 }
