@@ -6,16 +6,18 @@ import java.net.URI;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import modelos.Client;
 import modelos.Movie;
 
 public class VenPelicula extends javax.swing.JFrame {
     
     private Movie p;
+    private Client cliente;
 
-    public VenPelicula(String usser, Movie p) {
+    public VenPelicula(Client cliente, Movie p) {
         initComponents();
         setLocationRelativeTo(this);
-        txtUserEnSession.setText(usser);
+        txtUserEnSession.setText(cliente.getNombre());
         cargarComponentes(p);
         organizarImagen(lblPoster, p.getRutaImagen());
         this.p = p;
@@ -1875,7 +1877,7 @@ public class VenPelicula extends javax.swing.JFrame {
 
     private void btnCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarteleraActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPrincipal venPrincipal = new VenPrincipal(usser);
+        VenPrincipal venPrincipal = new VenPrincipal(cliente);
         venPrincipal.setVisible(true);
         this.dispose();
       
@@ -1891,35 +1893,35 @@ public class VenPelicula extends javax.swing.JFrame {
 
     private void btnCombosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombosActionPerformed
         String usser = txtUserEnSession.getText();
-        VenCombos venCombos = new VenCombos(usser);
+        VenCombos venCombos = new VenCombos(cliente);
         venCombos.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCombosActionPerformed
 
     private void btnMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMembresiaActionPerformed
         String usser = txtUserEnSession.getText();
-        VenMembresia venMembresia = new VenMembresia(usser);
+        VenMembresia venMembresia = new VenMembresia(cliente);
         venMembresia.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnMembresiaActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         String usser = txtUserEnSession.getText();
-        VenCompra venCompra = new VenCompra(usser, p);
+        VenCompra venCompra = new VenCompra(cliente, p);
         venCompra.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void btnPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromocionesActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPromo venPromo = new VenPromo(usser);
+        VenPromo venPromo = new VenPromo(cliente);
         venPromo.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPromocionesActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPerfil venPerfil = new VenPerfil(usser);
+        VenPerfil venPerfil = new VenPerfil(cliente);
         venPerfil.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPerfilActionPerformed

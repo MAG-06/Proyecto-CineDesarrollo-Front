@@ -1,8 +1,12 @@
 
 package vistas;
 
+import modelos.Client;
+
 
 public class VenLogin extends javax.swing.JFrame {
+    
+    private Client cliente;
 
     public VenLogin() {
         initComponents();
@@ -18,7 +22,6 @@ public class VenLogin extends javax.swing.JFrame {
         txtUser = new javax.swing.JTextField();
         txtPass = new javax.swing.JTextField();
         btnIniciar = new javax.swing.JButton();
-        btnInvitado = new javax.swing.JButton();
         btnRegistrarse = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -31,25 +34,11 @@ public class VenLogin extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("INICIAR SESION");
 
-        txtPass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPassActionPerformed(evt);
-            }
-        });
-
         btnIniciar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnIniciar.setText("Iniciar");
         btnIniciar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnIniciarActionPerformed(evt);
-            }
-        });
-
-        btnInvitado.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnInvitado.setText("Invitado");
-        btnInvitado.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInvitadoActionPerformed(evt);
             }
         });
 
@@ -84,8 +73,7 @@ public class VenLogin extends javax.swing.JFrame {
                         .addGap(93, 93, 93)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(btnRegistrarse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnIniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnInvitado, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnIniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,9 +107,7 @@ public class VenLogin extends javax.swing.JFrame {
                 .addComponent(btnIniciar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnRegistrarse)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnInvitado)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -155,7 +141,7 @@ public class VenLogin extends javax.swing.JFrame {
            venAdmin.setVisible(true);
            this.dispose();
         } else {
-        VenPrincipal venPrincipal = new VenPrincipal(usser);
+        VenPrincipal venPrincipal = new VenPrincipal(cliente);
         venPrincipal.setVisible(true);
         this.dispose();              
         }               
@@ -166,17 +152,6 @@ public class VenLogin extends javax.swing.JFrame {
        venRegister.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_btnRegistrarseActionPerformed
-
-    private void btnInvitadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInvitadoActionPerformed
-        String usser = "Invitado";
-        VenPrincipal venPrincipal = new VenPrincipal(usser);
-        venPrincipal.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnInvitadoActionPerformed
-
-    private void txtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPassActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -212,7 +187,6 @@ public class VenLogin extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIniciar;
-    private javax.swing.JButton btnInvitado;
     private javax.swing.JButton btnRegistrarse;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
