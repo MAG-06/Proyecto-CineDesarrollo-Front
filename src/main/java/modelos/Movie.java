@@ -1,0 +1,77 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package modelos;
+
+import javax.swing.ImageIcon;
+
+/**
+ *
+ * @author Nimac
+ */
+public class Movie {
+    
+    private String nombre;
+    private String descripcion;
+    private String clasificacion;
+    private String reparto;
+    private String director;
+    private String rutaImagen;
+    private String trailer;
+    private String duracion;
+
+    public Movie(String nombre, String descripcion, String clasificacion, String reparto, String director, String rutaImagen, String trailer, String duracion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.clasificacion = clasificacion;
+        this.reparto = reparto;
+        this.director = director;
+        this.rutaImagen = rutaImagen;
+        this.trailer = trailer;
+        this.duracion = duracion;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public String getClasificacion() {
+        return clasificacion;
+    }
+
+    public String getReparto() {
+        return reparto;
+    }
+
+    public String getDirector() {
+        return director;
+    }
+
+    public String getRutaImagen() {
+        return rutaImagen;
+    }
+
+    public String getTrailer() {
+        return trailer;
+    }
+
+    public String getDuracion() {
+        return duracion;
+    }
+    
+    
+    
+    
+    
+
+
+    
+
+   
+    
+}
