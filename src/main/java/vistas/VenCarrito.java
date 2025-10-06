@@ -5,13 +5,14 @@ import modelos.Car;
 import modelos.Food;
 import javax.swing.SwingWorker;
 import javax.swing.JOptionPane;
+import modelos.Client;
 
 public class VenCarrito extends javax.swing.JFrame {
     
-    private String usser;
+    private Client cliente;
     private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
    
-    public VenCarrito(String usser) {
+    public VenCarrito(Client cliente) {
         initComponents();
         setLocationRelativeTo(this);
         cargarCarrito(); 
@@ -183,9 +184,9 @@ public class VenCarrito extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
-        String usser = txtUser.getText();
+
         float total = Float.valueOf(txtTotal.getText());
-        VenPago venPago = new VenPago(total, usser);
+        VenPago venPago = new VenPago(total, cliente);
         venPago.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnComprarActionPerformed
