@@ -195,36 +195,56 @@ public class VenCarrito extends javax.swing.JFrame {
         new SwingWorker<Car, Void>() {
             @Override
             protected Car doInBackground() throws Exception {
-                return carritoSvc.obtenerCarrito();  
+                return carritoSvc.obtenerCarrito();
             }
 
             @Override
             protected void done() {
                 try {
-                    Car c = get(); 
+                    Car c = get();
                     txtCombos.setText("");
                     txtTicket.setText("");
-                    txtIdCarrito.setText(String.valueOf(c.getIdCarrito()));
+                    txtIdCarrito.setText("");
 
-                    if (c != null) {
-                        txtIdCarrito.setText(String.valueOf(c.getIdCarrito()));
-                        if (c.getCombos() != null && !c.getCombos().isEmpty()) {
-                            StringBuilder sb = new StringBuilder();
-                            for (Food f : c.getCombos()) {
-                                sb.append(" $").append((long)f.getPrecio())
-                                  .append("  |  ").append(f.getDescripcion())
-                                  .append("\n");
-                            }
-                            txtCombos.setText(sb.toString());
-                        } else {
-                            txtCombos.setText("No hay combos en el carrito.");
-                        }
-                        txtTicket.setText("Sin entradas por ahora.");
-                        txtTotal.setText(String.valueOf((long)c.getPrecioFinal()));
-                    } else {
+                    if (c == null) {
                         txtCombos.setText("No se pudo obtener el carrito.");
+                        txtTicket.setText("No se pudo obtener el carrito.");
                         txtTotal.setText("0");
+                        return;
                     }
+                    txtIdCarrito.setText(String.valueOf(c.getIdCarrito()));
+                    
+                    if (c.getEntradas() != null && !c.getEntradas().isEmpty()) {
+                        StringBuilder sbE = new StringBuilder();
+                        for (modelos.Ticket t : c.getEntradas()) {
+                            sbE.append("Entrada #").append(t.getNumEntrada())
+                               .append("  $").append(t.getPrecioEntrada());
+
+                            if (t.getSala() != null 
+                                    && t.getSala().getSillas() != null 
+                                    && t.getSala().getSillas().length > 0) {
+                                sbE.append("  |  Sala ").append(t.getSala().getNumSala())
+                                   .append("  -  Silla ").append(t.getSala().getSillas()[0].getNumSilla());
+                            }
+                            sbE.append("\n");
+                        }
+                        txtTicket.setText(sbE.toString());
+                    } else {
+                        txtTicket.setText("No hay entradas en el carrito.");
+                    }
+                    if (c.getCombos() != null && !c.getCombos().isEmpty()) {
+                        StringBuilder sbC = new StringBuilder();
+                        for (Food f : c.getCombos()) {
+                            sbC.append(" $").append((long) f.getPrecio())
+                               .append("  |  ").append(f.getDescripcion())
+                               .append("\n");
+                        }
+                        txtCombos.setText(sbC.toString());
+                    } else {
+                        txtCombos.setText("No hay combos en el carrito.");
+                    }
+                    txtTotal.setText(String.format("%.0f", c.getPrecioFinal()));
+
                 } catch (Exception e) {
                     JOptionPane.showMessageDialog(VenCarrito.this,
                             "Error cargando carrito: " + e.getMessage(),

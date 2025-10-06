@@ -1,20 +1,20 @@
 package vistas;
 
-import java.awt.Desktop;
 import java.awt.Image;
-import java.net.URI;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import modelos.Client;
 import modelos.Movie;
+import service.CarritoServiceFront;
 
 
 public class VenCompra extends javax.swing.JFrame {
     
     private Movie p;
-    
+    private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
+    private int numSala = 1;
     private Client cliente;
 
 
@@ -25,6 +25,7 @@ public class VenCompra extends javax.swing.JFrame {
         cargarComponentes(p);
         organizarImagen(lblPoster, p.getRutaImagen());
         this.p = p;
+        this.numSala = 1;
         this.cliente = cliente;
     }
 
@@ -105,8 +106,7 @@ public class VenCompra extends javax.swing.JFrame {
         btnRestarSillas = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         lblDuracion = new javax.swing.JLabel();
-        btnConfirmar = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnAgregarCarrito = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -502,6 +502,11 @@ public class VenCompra extends javax.swing.JFrame {
         txtNumSillas.setBackground(new java.awt.Color(102, 102, 102));
         txtNumSillas.setForeground(new java.awt.Color(255, 255, 255));
         txtNumSillas.setText("0");
+        txtNumSillas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNumSillasActionPerformed(evt);
+            }
+        });
 
         btnSumarSIllas.setBackground(new java.awt.Color(102, 102, 102));
         btnSumarSIllas.setForeground(new java.awt.Color(255, 255, 255));
@@ -563,14 +568,12 @@ public class VenCompra extends javax.swing.JFrame {
         lblDuracion.setForeground(new java.awt.Color(255, 255, 255));
         lblDuracion.setText("jLabel9");
 
-        btnConfirmar.setText("PAGAR YA");
-        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarCarrito.setText("AGREGAR AL CARRITO");
+        btnAgregarCarrito.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnConfirmarActionPerformed(evt);
+                btnAgregarCarritoActionPerformed(evt);
             }
         });
-
-        jButton1.setText("AGREGAR AL CARRITO");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -579,43 +582,44 @@ public class VenCompra extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblPoster, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblNombre))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lblClasificacion))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel8))
+                                .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblNombre))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(14, 14, 14)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(lblDuracion))
-                                    .addComponent(lblDirector)))))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(53, 53, 53)
-                        .addComponent(btnConfirmar))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lblClasificacion))
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5)
+                                            .addComponent(jLabel8))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGap(6, 6, 6)
+                                                .addComponent(lblDuracion))
+                                            .addComponent(lblDirector)))))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnAgregarCarrito)
+                        .addGap(360, 360, 360))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -628,9 +632,7 @@ public class VenCompra extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnConfirmar)
-                            .addComponent(jButton1)))
+                        .addComponent(btnAgregarCarrito))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
@@ -729,8 +731,9 @@ public class VenCompra extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnRestarSillasActionPerformed
 
+
+
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
-        String usser = txtUserEnSession.getText();
         int numSillas = Integer.parseInt(txtNumSillas.getText());
         float ValorCompra = 14000 * numSillas;
         VenPago venPago = new VenPago(ValorCompra, cliente);
@@ -749,6 +752,68 @@ public class VenCompra extends javax.swing.JFrame {
         venCarrito.setVisible(true);
     }//GEN-LAST:event_btnCarritoActionPerformed
 
+    private void btnAgregarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCarritoActionPerformed
+        int cantidad;
+        try {
+            cantidad = Integer.parseInt(txtNumSillas.getText().trim());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Cantidad inválida.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        if (cantidad <= 0) {
+            JOptionPane.showMessageDialog(this, "Selecciona al menos 1 silla.", "Aviso",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        if (cantidad > 31) {
+            JOptionPane.showMessageDialog(this, "Máximo 31 sillas.", "Aviso",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        btnAgregarCarrito.setEnabled(false);
+
+        new javax.swing.SwingWorker<Boolean, Void>() {
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                boolean todoOk = true;
+                // Parche solo-front: enviamos numSilla = 1..cantidad
+                for (int i = 1; i <= cantidad; i++) {
+                    boolean ok = carritoSvc.agregarEntrada(numSala, i);
+                    if (!ok) todoOk = false;
+                }
+                return todoOk;
+            }
+
+            @Override
+            protected void done() {
+                btnAgregarCarrito.setEnabled(true);
+                try {
+                    boolean exito = get();
+                    if (exito) {
+                        JOptionPane.showMessageDialog(VenCompra.this,
+                                "Entradas agregadas al carrito: " + cantidad,
+                                "OK", JOptionPane.INFORMATION_MESSAGE);
+                        txtNumSillas.setText("0");
+                    } else {
+                        JOptionPane.showMessageDialog(VenCompra.this,
+                                "No se pudieron agregar todas las entradas.",
+                                "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(VenCompra.this,
+                            "Error conectando con el servidor: " + e.getMessage(),
+                            "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }.execute();
+    }//GEN-LAST:event_btnAgregarCarritoActionPerformed
+
+    private void txtNumSillasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumSillasActionPerformed
+        
+    }//GEN-LAST:event_txtNumSillasActionPerformed
+
     private void cargarComponentes(Movie p) {
         lblNombre.setText(p.getNombre());
         lblClasificacion.setText(p.getClasificacion());
@@ -758,7 +823,7 @@ public class VenCompra extends javax.swing.JFrame {
         
         java.net.URL url = getClass().getResource(p.getRutaImagen());
         ImageIcon icon = new ImageIcon(url);
-        Image imgEscalada = icon.getImage().getScaledInstance(200, 300, Image.SCALE_SMOOTH); // ejemplo      
+        Image imgEscalada = icon.getImage().getScaledInstance(200, 300, Image.SCALE_SMOOTH);    
     }    
     
     private void organizarImagen(JLabel label, String rutaImagen) {
@@ -778,6 +843,7 @@ public class VenCompra extends javax.swing.JFrame {
             
             }
     }
+    
     
   
     public static void main(String args[]) {
@@ -821,17 +887,16 @@ public class VenCompra extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CbSelectCIty;
+    private javax.swing.JButton btnAgregarCarrito;
     private javax.swing.JButton btnBot;
     private javax.swing.JButton btnCarrito;
     private javax.swing.JButton btnCartelera;
     private javax.swing.JButton btnCombos;
-    private javax.swing.JButton btnConfirmar;
     private javax.swing.JButton btnMembresia;
     private javax.swing.JButton btnPerfil;
     private javax.swing.JButton btnPromociones;
     private javax.swing.JButton btnRestarSillas;
     private javax.swing.JButton btnSumarSIllas;
-    private javax.swing.JButton jButton1;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox10;
     private javax.swing.JCheckBox jCheckBox11;

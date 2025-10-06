@@ -10,6 +10,7 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import modelos.Ticket;
 
 /**
  *
@@ -51,6 +52,21 @@ public class CarritoServiceFront {
         Call<Void> call = api.vaciarCarrito();         
         Response<Void> resp = call.execute();
         return resp.isSuccessful();
+    }
+    
+    public List<Ticket> listarEntradas() throws IOException {
+        Response<List<Ticket>> res = api.listarEntradas().execute();
+        return res.isSuccessful() && res.body()!=null ? res.body() : Collections.emptyList();
+    }
+
+    public boolean agregarEntrada(int numSala, int numSilla) throws IOException {
+        Response<Void> res = api.agregarEntrada(numSala, numSilla).execute();
+        return res.isSuccessful();
+    }
+
+    public boolean eliminarEntrada(int numEntrada) throws IOException {
+        Response<Void> res = api.eliminarEntrada(numEntrada).execute();
+        return res.isSuccessful();
     }
     
 }
