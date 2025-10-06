@@ -1,19 +1,26 @@
 package vistas;
 
+
 import modelos.Client;
 import modelos.Movie;
+import service.CarritoServiceFront;
+import modelos.Car;
+import javax.swing.JOptionPane;
+import javax.swing.SwingWorker;
 
 public class VenCombos extends javax.swing.JFrame {       
 
     private Client cliente;
+    
+    private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
     
     public VenCombos(Client cliente) {
         initComponents();
         setLocationRelativeTo(this);
         this.cliente = cliente;
         txtUserEnSession.setText(cliente.getNombre());
-        
     }
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -198,19 +205,44 @@ public class VenCombos extends javax.swing.JFrame {
 
         btnCombo4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Combos/combo4he.png"))); // NOI18N
         btnCombo4.setBorderPainted(false);
+        btnCombo4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCombo4ActionPerformed(evt);
+            }
+        });
 
         btnCombo2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Combos/combo2he.png"))); // NOI18N
         btnCombo2.setBorderPainted(false);
+        btnCombo2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCombo2ActionPerformed(evt);
+            }
+        });
 
         btnCombo5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Combos/combo5he.png"))); // NOI18N
         btnCombo5.setBorderPainted(false);
+        btnCombo5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCombo5ActionPerformed(evt);
+            }
+        });
 
         btnCombo3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Combos/combo3he.png"))); // NOI18N
         btnCombo3.setBorderPainted(false);
+        btnCombo3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCombo3ActionPerformed(evt);
+            }
+        });
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Combos/comboJuniorhe.png"))); // NOI18N
         jButton6.setText("\n");
         jButton6.setBorderPainted(false);
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -317,7 +349,7 @@ public class VenCombos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPromocionesActionPerformed
 
     private void btnCombo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo1ActionPerformed
-        // TODO add your handling code here:
+      agregarAlCarritoAsync(1);
     }//GEN-LAST:event_btnCombo1ActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
@@ -333,10 +365,60 @@ public class VenCombos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBotActionPerformed
 
     private void btnCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarritoActionPerformed
-        VenCarrito venCarrito = new VenCarrito();
+        String usser = txtUserEnSession.getText();
+        VenCarrito venCarrito = new VenCarrito(cliente);
         venCarrito.setVisible(true);
     }//GEN-LAST:event_btnCarritoActionPerformed
 
+    private void btnCombo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo2ActionPerformed
+     agregarAlCarritoAsync(2);
+    }//GEN-LAST:event_btnCombo2ActionPerformed
+
+    private void btnCombo3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo3ActionPerformed
+      agregarAlCarritoAsync(3);
+    }//GEN-LAST:event_btnCombo3ActionPerformed
+
+    private void btnCombo4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo4ActionPerformed
+     agregarAlCarritoAsync(4);
+    }//GEN-LAST:event_btnCombo4ActionPerformed
+
+    private void btnCombo5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo5ActionPerformed
+       agregarAlCarritoAsync(5);
+    }//GEN-LAST:event_btnCombo5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+       agregarAlCarritoAsync(6);
+    }//GEN-LAST:event_jButton6ActionPerformed
+    
+    private void agregarAlCarritoAsync(int idCombo) {
+        new SwingWorker<Boolean, Void>() {
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                return carritoSvc.agregarCombo(idCombo);
+            }
+            @Override
+            protected void done() {
+                try {
+                    boolean ok = get();
+                    if (ok) {
+                        Car c = carritoSvc.obtenerCarrito();
+                        double total = (c != null) ? c.getPrecioFinal() : 0.0;
+                        JOptionPane.showMessageDialog(VenCombos.this,
+                            "Combo agregado al carrito.\nTotal actual: $ " + (long) total);
+                    } else {
+                        JOptionPane.showMessageDialog(VenCombos.this,
+                            "No se pudo agregar el combo", "Aviso",
+                            JOptionPane.WARNING_MESSAGE);
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(VenCombos.this,
+                        "Error: " + ex.getMessage(), "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }.execute();
+    }
+  
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

@@ -362,7 +362,8 @@ public class VenPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBotActionPerformed
 
     private void btnCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarritoActionPerformed
-        VenCarrito venCarrito = new VenCarrito();
+        String usser = txtUserEnSession.getText();
+        VenCarrito venCarrito = new VenCarrito(usser);
         venCarrito.setVisible(true);
     }//GEN-LAST:event_btnCarritoActionPerformed
 
