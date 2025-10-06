@@ -5,6 +5,7 @@
 package api;
 import modelos.Client;
 import java.util.List;
+import java.util.Map;
 import retrofit2.Call;
 import retrofit2.http.*;
 
@@ -30,6 +31,9 @@ public interface ClienteApiService {
     
     @DELETE("api/clientes/{cedula}")
     Call<Void> eliminarCliente(@Path("cedula") String cedula);
+    
+    @POST("api/clientes/login")
+    Call<Client> login(@Body Map<String, String> credenciales);
 
     
 }

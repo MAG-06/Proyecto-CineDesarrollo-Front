@@ -22,6 +22,7 @@ public class VenMembresia extends javax.swing.JFrame {
         organizarImagen(lblMembresia, "/imagenes/tajetaP.png");
 
         this.p = p;
+        this.cliente = cliente;
     }
 
 

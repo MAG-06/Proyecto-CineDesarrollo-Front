@@ -1,12 +1,17 @@
 
 package vistas;
 
+import java.io.IOException;
+import javax.swing.JOptionPane;
 import modelos.Client;
+import service.ClienteServiceFront;
 
 
 public class VenLogin extends javax.swing.JFrame {
     
-    private Client cliente;
+    
+    
+    private final ClienteServiceFront service = new ClienteServiceFront();
 
     public VenLogin() {
         initComponents();
@@ -131,20 +136,44 @@ public class VenLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-        String usser = "";
-        if(!txtUser.equals("")) {
-            usser = txtUser.getText();
-        }           
         
-        if(usser.equals("Admin")) {
-           VenPanelAdmin venAdmin = new VenPanelAdmin(usser);
-           venAdmin.setVisible(true);
+        try {
+        if(txtUser.getText().isEmpty() || txtPass.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Rellene los campos para iniciar sesion");
+            return;
+        }   
+
+        String correo = txtUser.getText();
+        String contraseña = txtPass.getText();
+        
+        if(correo.equals("Admin")) {
+           VenPanelAdmin venAdmin = new VenPanelAdmin(correo);
+           venAdmin.setVisible(true);  
            this.dispose();
+           
         } else {
-        VenPrincipal venPrincipal = new VenPrincipal(cliente);
-        venPrincipal.setVisible(true);
-        this.dispose();              
-        }               
+            
+          Client cliente = service.buscarPorCorreoYContraseña(correo, contraseña);
+          
+          if(cliente == null) {
+              
+            JOptionPane.showMessageDialog(null, "Correo o contraseña invalidos");
+            return;   
+            
+          } else {
+              
+            VenPrincipal venPrincipal = new VenPrincipal(cliente);
+            venPrincipal.setVisible(true);  
+            this.dispose();   
+          }
+   
+        }
+        
+
+        } catch(IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al conectar con el servidor");          
+        }
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void btnRegistrarseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarseActionPerformed

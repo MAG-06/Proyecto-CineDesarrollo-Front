@@ -27,7 +27,7 @@ public class VenPanelAdmin extends javax.swing.JFrame {
         initComponents();
         txtAdminEnSession.setText(usser);
         setLocationRelativeTo(this);
-        cargarTabla();
+        cargarTablaClientes();
     }
 
     /**
@@ -556,7 +556,7 @@ public class VenPanelAdmin extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCerrarSesionActionPerformed
 
-    private void cargarTabla() {
+    private void cargarTablaClientes() {
         new SwingWorker<List<Client>, Void>() {
             @Override
             protected List<Client> doInBackground() throws Exception {

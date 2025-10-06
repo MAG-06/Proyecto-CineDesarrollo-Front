@@ -14,6 +14,7 @@ public class VenPromo1 extends javax.swing.JFrame {
     public VenPromo1(Client cliente) {
         initComponents();
         setLocationRelativeTo(this);
+        this.cliente = cliente;
         txtUserEnSession.setText(cliente.getNombre());
     }
 

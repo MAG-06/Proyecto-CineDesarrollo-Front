@@ -21,6 +21,7 @@ public class VenPelicula extends javax.swing.JFrame {
         cargarComponentes(p);
         organizarImagen(lblPoster, p.getRutaImagen());
         this.p = p;
+        this.cliente = cliente;
     }
 
 

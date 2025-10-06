@@ -14,6 +14,7 @@ public class VenPromo extends javax.swing.JFrame {
     public VenPromo(Client cliente) {
         initComponents();
         setLocationRelativeTo(this);
+        this.cliente = cliente;
         txtUserEnSession.setText(cliente.getNombre());
         organizarImagen(txtTiket, "/imagenes/tiket.png");
     }

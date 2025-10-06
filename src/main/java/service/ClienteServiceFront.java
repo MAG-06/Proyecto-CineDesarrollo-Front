@@ -7,7 +7,9 @@ package service;
 import api.ApiClient;
 import api.ClienteApiService;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import modelos.Client;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -52,6 +54,21 @@ public class ClienteServiceFront {
         Call<Void> call = api.eliminarCliente(cedula);
         Response<Void> response = call.execute();
         return response.isSuccessful();
+    }
+    
+        public Client buscarPorCorreoYContraseña(String correo, String contraseña) throws IOException {
+        Map<String, String> credenciales = new HashMap<>();
+        credenciales.put("correo", correo);
+        credenciales.put("contraseña", contraseña);
+
+        Call<Client> call = api.login(credenciales);
+        Response<Client> response = call.execute();
+
+        if (response.isSuccessful()) {
+            return response.body(); 
+        } else {
+            return null;
+        }
     }
     
 }

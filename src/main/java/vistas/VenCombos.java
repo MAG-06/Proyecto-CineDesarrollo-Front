@@ -10,7 +10,9 @@ public class VenCombos extends javax.swing.JFrame {
     public VenCombos(Client cliente) {
         initComponents();
         setLocationRelativeTo(this);
+        this.cliente = cliente;
         txtUserEnSession.setText(cliente.getNombre());
+        
     }
 
     @SuppressWarnings("unchecked")

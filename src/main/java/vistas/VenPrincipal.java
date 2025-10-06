@@ -16,7 +16,9 @@ public class VenPrincipal extends javax.swing.JFrame {
     public VenPrincipal(Client cliente) {
         initComponents();
         setLocationRelativeTo(this);
+        this.cliente = cliente;
         txtUserEnSession.setText(cliente.getNombre());
+        
         
     }
 
