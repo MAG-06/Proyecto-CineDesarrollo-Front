@@ -6,21 +6,18 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
- feature-MovieFront
 import javax.swing.JOptionPane;
-
 import modelos.Client;
- develop
 import modelos.Movie;
 import service.MovieServiceFront;
 
+
+
 public class VenPrincipal extends javax.swing.JFrame {
     
- feature-MovieFront
     private final MovieServiceFront service = new MovieServiceFront();
 
     private Client cliente;
- develop
 
     public VenPrincipal(Client cliente) {
         initComponents();
