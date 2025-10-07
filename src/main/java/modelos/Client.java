@@ -21,7 +21,7 @@ public class Client extends User {
 		this.edad = edad;
 		this.ciudad = ciudad;
 		this.estadoMembresia = estadoMembresia;
-		this.historial = historial;
+		this.historial = new ArrayList<>();
 		this.carrito = carrito;
 	}
 

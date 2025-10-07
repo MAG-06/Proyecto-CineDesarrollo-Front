@@ -16,6 +16,7 @@ public class VenCarrito extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
         cargarCarrito(); 
+        this.cliente = cliente;   
         txtUser.setEditable(false);
         txtCombos.setEditable(false);
         txtTicket.setEditable(false);
@@ -187,7 +188,7 @@ public class VenCarrito extends javax.swing.JFrame {
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
         float total = Float.valueOf(txtTotal.getText());
-        VenPago venPago = new VenPago(total, cliente);
+        VenPago venPago = new VenPago(total, cliente); // cliente ya NO será null
         venPago.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnComprarActionPerformed

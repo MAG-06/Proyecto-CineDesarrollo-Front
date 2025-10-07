@@ -1,21 +1,26 @@
 package vistas;
 
+import java.util.Random;
 import javax.swing.JOptionPane;
 import modelos.Client;
 import service.CarritoServiceFront;
 import javax.swing.SwingWorker;
+import modelos.Bill;
 
 public class VenPago extends javax.swing.JFrame {
     
-    private Client cliente;
-
-    private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
+    private final service.CarritoServiceFront carritoSvc = new service.CarritoServiceFront();
+    private final modelos.Client cliente;
+    
+    private float valorCompra;
 
     public VenPago(float valorCompra, Client cliente) {
         initComponents();
-        lblValorPagar.setText("Su valor a pagar es:" + " " + valorCompra);
-        setLocationRelativeTo(this);
         this.cliente = cliente;
+        lblValorPagar.setText("Su valor a pagar es: " + valorCompra);
+        setLocationRelativeTo(this);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        this.valorCompra = valorCompra;
     }
 
     @SuppressWarnings("unchecked")
@@ -189,15 +194,50 @@ public class VenPago extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
-        if(txtNombrePropietario.getText().isEmpty() || txtNumCC.getText().isEmpty() || txtExp.getText().isEmpty() || txtCvv.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Rellene todos los campos para finalizar la compra");
-            return;
-        }
-        JOptionPane.showMessageDialog(null, "Su pago ha sido exitoso");
-        VenPrincipal venPrincipal = new VenPrincipal(cliente);
-        venPrincipal.setVisible(true);
-        this.dispose();
-        vaciarCarritoYVolver();
+        btnPagar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+
+        new javax.swing.SwingWorker<Boolean, Void>() {
+
+            // variables para pasar del background al done()
+            private modelos.Car carSnapshot;
+            private String facturaTexto;
+   
+
+            @Override
+            protected Boolean doInBackground() throws Exception {
+                // 1) Obtener snapshot del carrito
+                carSnapshot = carritoSvc.obtenerCarrito();
+
+                // 2) Construir la factura con ese snapshot
+                facturaTexto = construirFacturaDesdeCar(cliente, carSnapshot, "Tarjeta");
+                
+                
+
+                // 3) Vaciar el carrito (backend ya existente)
+                return carritoSvc.vaciarCarrito();
+            }
+
+            @Override
+            protected void done() {
+                try {
+                    boolean ok = get();
+                    if (ok) {
+                        javax.swing.JOptionPane.showMessageDialog(VenPago.this, "Su pago ha sido exitoso");
+                    } else {
+                        javax.swing.JOptionPane.showMessageDialog(VenPago.this, "No se pudo vaciar el carrito", "Aviso",
+                                javax.swing.JOptionPane.WARNING_MESSAGE);
+                    }
+                } catch (Exception ex) {
+                    javax.swing.JOptionPane.showMessageDialog(VenPago.this, "Error: " + ex.getMessage(), "Error",
+                            javax.swing.JOptionPane.ERROR_MESSAGE);
+                } finally {
+                    // 4) Ir al perfil mostrando la factura de la compra realizada
+                    new vistas.VenPerfil(cliente, facturaTexto).setVisible(true);
+                    VenPago.this.dispose();
+                }
+            }
+        }.execute();
     }//GEN-LAST:event_btnPagarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -215,16 +255,57 @@ public class VenPago extends javax.swing.JFrame {
         new SwingWorker<Boolean, Void>() {
             @Override
             protected Boolean doInBackground() throws Exception {
-                return carritoSvc.vaciarCarrito(); 
+                return carritoSvc.vaciarCarrito();
             }
             @Override
             protected void done() {
                 try { get(); } catch (Exception ignored) {}
-                VenPrincipal venPrincipal = new VenPrincipal(cliente);
-                venPrincipal.setVisible(true);
+                new VenPrincipal(cliente).setVisible(true);
                 dispose();
             }
         }.execute();
+    }
+    
+    private String construirFacturaDesdeCar(modelos.Client cliente, modelos.Car car, String metodoPago) {
+        if (car == null) return "No se pudo obtener el carrito.";
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("========= FACTURA =========\n");
+        sb.append("Cliente: ").append(cliente != null ? cliente.getNombre() : "N/D").append("\n");
+        sb.append("ID Carrito: ").append(car.getIdCarrito()).append("\n\n");
+
+        sb.append("Entradas:\n");
+        if (car.getEntradas() != null && !car.getEntradas().isEmpty()) {
+            int i = 1;
+            for (modelos.Ticket t : car.getEntradas()) {
+                sb.append("  ").append(i++).append(") ")
+                  .append("Sala ").append(t.getSala() != null ? t.getSala().getNumSala() : "?")
+                  .append(" | Silla ").append(t.getNumEntrada())
+                  .append(" | $").append((long) t.getPrecioEntrada())
+                  .append("\n");
+            }
+        } else {
+            sb.append("  (No hay entradas)\n");
+        }
+
+        sb.append("\nCombos:\n");
+        if (car.getCombos() != null && !car.getCombos().isEmpty()) {
+            int i = 1;
+            for (modelos.Food f : car.getCombos()) {
+                sb.append("  ").append(i++).append(") ")
+                  .append(f.getDescripcion())
+                  .append(" | $").append((long) f.getPrecio())
+                  .append("\n");
+            }
+        } else {
+            sb.append("  (No hay combos)\n");
+        }
+
+        sb.append("\n---------------------------\n");
+        sb.append("TOTAL: $").append((long) car.getPrecioFinal()).append("\n");
+        sb.append("Método de pago: ").append(metodoPago != null ? metodoPago : "Pendiente").append("\n");
+        sb.append("===========================\n");
+        return sb.toString();
     }
     /**
      * @param args the command line arguments
