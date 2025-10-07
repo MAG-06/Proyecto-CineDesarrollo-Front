@@ -1,8 +1,6 @@
 package vistas;
 
-
 import modelos.Client;
-import modelos.Movie;
 import service.CarritoServiceFront;
 import modelos.Car;
 import javax.swing.JOptionPane;

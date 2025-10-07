@@ -62,11 +62,5 @@ public class Hall {
 		this.sillas = sillas;
 	}
 	
-	
-	
-	
-	
-	
-	
 
 }

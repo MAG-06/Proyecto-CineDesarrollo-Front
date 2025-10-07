@@ -1,15 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelos;
 
-import javax.swing.ImageIcon;
-
-/**
- *
- * @author Nimac
- */
 public class Movie {
     
     private String nombre;
@@ -63,15 +53,5 @@ public class Movie {
     public String getDuracion() {
         return duracion;
     }
-    
-    
-    
-    
-    
 
-
-    
-
-   
-    
 }

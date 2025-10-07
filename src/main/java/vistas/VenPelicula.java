@@ -1139,7 +1139,7 @@ public class VenPelicula extends javax.swing.JFrame {
         
         java.net.URL url = getClass().getResource(p.getRutaImagen());
         ImageIcon icon = new ImageIcon(url);
-        Image imgEscalada = icon.getImage().getScaledInstance(200, 300, Image.SCALE_SMOOTH); // ejemplo
+        Image imgEscalada = icon.getImage().getScaledInstance(200, 300, Image.SCALE_SMOOTH); 
 
         
     }    

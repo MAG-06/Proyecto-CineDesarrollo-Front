@@ -8,9 +8,7 @@ import service.ClienteServiceFront;
 
 
 public class VenLogin extends javax.swing.JFrame {
-    
-    
-    
+  
     private final ClienteServiceFront service = new ClienteServiceFront();
 
     public VenLogin() {

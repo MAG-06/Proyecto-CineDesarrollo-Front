@@ -6,7 +6,6 @@ import modelos.Car;
 import modelos.Food;
 import retrofit2.Call;
 import retrofit2.Response;
-
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;

@@ -60,16 +60,4 @@ public class Car {
 		this.precioFinal = precioFinal;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }
