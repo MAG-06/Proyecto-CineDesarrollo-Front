@@ -619,7 +619,7 @@ public class VenCompra extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(368, 368, 368)
                         .addComponent(btnAgregarCarrito)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(342, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -718,9 +718,7 @@ public class VenCompra extends javax.swing.JFrame {
           txtNumSillas.setText(String.valueOf(numSillas));
         } else {
             JOptionPane.showMessageDialog(null, "Maximo de sillas en la sala");
-        }
-        
-        
+        }                
     }//GEN-LAST:event_btnSumarSIllasActionPerformed
 
     private void btnRestarSillasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestarSillasActionPerformed
@@ -778,7 +776,6 @@ public class VenCompra extends javax.swing.JFrame {
             @Override
             protected Boolean doInBackground() throws Exception {
                 boolean todoOk = true;
-                // Parche solo-front: enviamos numSilla = 1..cantidad
                 for (int i = 1; i <= cantidad; i++) {
                     boolean ok = carritoSvc.agregarEntrada(numSala, i);
                     if (!ok) todoOk = false;

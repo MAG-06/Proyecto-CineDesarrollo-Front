@@ -1,11 +1,5 @@
-
 package vistas;
 
-import java.awt.Image;
-import java.net.URL;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import modelos.Client;
 import modelos.Movie;
@@ -16,16 +10,13 @@ import service.MovieServiceFront;
 public class VenPrincipal extends javax.swing.JFrame {
     
     private final MovieServiceFront service = new MovieServiceFront();
-
     private Client cliente;
 
     public VenPrincipal(Client cliente) {
         initComponents();
         setLocationRelativeTo(this);
         this.cliente = cliente;
-        txtUserEnSession.setText(cliente.getNombre());
-        
-        
+        txtUserEnSession.setText(cliente.getNombre());  
     }
 
 

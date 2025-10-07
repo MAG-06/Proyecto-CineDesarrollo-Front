@@ -1,9 +1,6 @@
-
 package vistas;
 
-import java.awt.Desktop;
 import java.awt.Image;
-import java.net.URI;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;

@@ -6,7 +6,6 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import modelos.Client;
-import modelos.Movie;
 
 public class VenPerfil extends javax.swing.JFrame {
     
@@ -18,9 +17,7 @@ public class VenPerfil extends javax.swing.JFrame {
         setLocationRelativeTo(this);
         txtUserEnSession.setText(cliente.getNombre());
         organizarImagen(lblUserEdit, "/imagenes/editUser.png");
-        organizarTextos();
-        
-        
+        organizarTextos();        
     }
 
 
