@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import modelos.Car;
 import modelos.Client;
 import modelos.Movie;
 
@@ -13,8 +14,9 @@ public class VenPelicula extends javax.swing.JFrame {
     
     private Movie p;
     private Client cliente;
+    private Car carrito;
 
-    public VenPelicula(Client cliente, Movie p) {
+    public VenPelicula(Client cliente, Movie p, Car carrito) {
         initComponents();
         setLocationRelativeTo(this);
         txtUserEnSession.setText(cliente.getNombre());
@@ -22,6 +24,7 @@ public class VenPelicula extends javax.swing.JFrame {
         organizarImagen(lblPoster, p.getRutaImagen());
         this.p = p;
         this.cliente = cliente;
+        this.carrito = carrito;
     }
 
 
@@ -1070,7 +1073,7 @@ public class VenPelicula extends javax.swing.JFrame {
 
     private void btnCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarteleraActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPrincipal venPrincipal = new VenPrincipal(cliente);
+        VenPrincipal venPrincipal = new VenPrincipal(cliente, carrito);
         venPrincipal.setVisible(true);
         this.dispose();
       
@@ -1086,35 +1089,35 @@ public class VenPelicula extends javax.swing.JFrame {
 
     private void btnCombosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombosActionPerformed
         String usser = txtUserEnSession.getText();
-        VenCombos venCombos = new VenCombos(cliente);
+        VenCombos venCombos = new VenCombos(cliente, carrito);
         venCombos.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCombosActionPerformed
 
     private void btnMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMembresiaActionPerformed
         String usser = txtUserEnSession.getText();
-        VenMembresia venMembresia = new VenMembresia(cliente);
+        VenMembresia venMembresia = new VenMembresia(cliente, carrito);
         venMembresia.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnMembresiaActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         String usser = txtUserEnSession.getText();
-        VenCompra venCompra = new VenCompra(cliente, p);
+        VenCompra venCompra = new VenCompra(cliente, p, carrito);
         venCompra.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void btnPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromocionesActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPromo venPromo = new VenPromo(cliente);
+        VenPromo venPromo = new VenPromo(cliente, carrito);
         venPromo.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPromocionesActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPerfil venPerfil = new VenPerfil(cliente);
+        VenPerfil venPerfil = new VenPerfil(cliente, carrito);
         venPerfil.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPerfilActionPerformed
@@ -1126,7 +1129,7 @@ public class VenPelicula extends javax.swing.JFrame {
 
     private void btnCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarritoActionPerformed
         String usser = txtUserEnSession.getText();
-        VenCarrito venCarrito = new VenCarrito(cliente);
+        VenCarrito venCarrito = new VenCarrito(cliente, carrito);
         venCarrito.setVisible(true);
     }//GEN-LAST:event_btnCarritoActionPerformed
 
@@ -1161,42 +1164,7 @@ public class VenPelicula extends javax.swing.JFrame {
             
             }
     }
-    
    
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VenPelicula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VenPelicula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VenPelicula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VenPelicula.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VenPelicula(null, null).setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CbSelectCIty;

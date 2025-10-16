@@ -215,7 +215,7 @@ public class VenRegister extends javax.swing.JFrame {
                 return;
             } else {
                 
-              Client cliente = new Client(rol, id, correo, contraseña, cedula, nombre, apellido, edad, ciudad, membresia, null, null);
+              Client cliente = new Client(rol, id, correo, contraseña, cedula, nombre, apellido, edad, ciudad, membresia, null);
               boolean ok = service.guardarCliente(cliente);
               
               if(ok) {

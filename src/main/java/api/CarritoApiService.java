@@ -1,10 +1,13 @@
 package api;
 
 import java.util.List;
+import java.util.Map;
+import modelos.Bill;
 import modelos.Car;
 import modelos.Food;
 import modelos.Ticket;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -16,28 +19,22 @@ import retrofit2.http.Path;
  */
 public interface CarritoApiService {
     
-    @GET("api/carrito")
-    Call<Car> obtenerCarrito();
+    @POST("api/carrito/combos")
+    Call<Car> agregarCombo(@Body Map<String, Object> body);
 
-    @GET("api/carrito/combos")
-    Call<List<Food>> listarCombosDelCarrito();
+    @DELETE("api/carrito/combos")
+    Call<Car> eliminarCombo(@Body Map<String, Object> body);
 
-    @POST("api/carrito/combos/{idCombo}")
-    Call<Void> agregarCombo(@Path("idCombo") int idCombo);
+    @POST("api/carrito/entradas")
+    Call<Car> agregarEntrada(@Body Map<String, Object> body);
 
-    @DELETE("api/carrito/combos/{idCombo}")
-    Call<Void> eliminarCombo(@Path("idCombo") int idCombo);
+    @DELETE("api/carrito/entradas")
+    Call<Car> eliminarEntrada(@Body Map<String, Object> body);
 
-    @DELETE("api/carrito")
-    Call<Void> vaciarCarrito();
-    
-    @GET("api/carrito/entradas")
-    Call<List<Ticket>> listarEntradas();
+    @POST("api/carrito/vaciar")
+    Call<Void> vaciarCarrito(@Body Car carrito);
 
-    @POST("api/carrito/entradas/{numSala}/{numSilla}")
-    Call<Void> agregarEntrada(@Path("numSala") int numSala, @Path("numSilla") int numSilla);
-
-    @DELETE("api/carrito/entradas/{numEntrada}")
-    Call<Void> eliminarEntrada(@Path("numEntrada") int numEntrada);
+    @POST("api/carrito/checkout")
+    Call<Bill> agregarCarritoEnFactura(@Body Map<String, Object> body);
     
 }

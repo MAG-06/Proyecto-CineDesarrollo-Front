@@ -5,8 +5,10 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import modelos.Car;
 import modelos.Client;
 import modelos.Movie;
+import modelos.Ticket;
 import service.CarritoServiceFront;
 
 
@@ -16,9 +18,10 @@ public class VenCompra extends javax.swing.JFrame {
     private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
     private int numSala = 1;
     private Client cliente;
+    private Car carrito;
 
 
-    public VenCompra(Client cliente, Movie p) {
+    public VenCompra(Client cliente, Movie p,Car carrito) {
         initComponents();
         setLocationRelativeTo(this);
         txtUserEnSession.setText(cliente.getNombre());
@@ -27,6 +30,7 @@ public class VenCompra extends javax.swing.JFrame {
         this.p = p;
         this.numSala = 1;
         this.cliente = cliente;
+        this.carrito = carrito;
     }
 
     @SuppressWarnings("unchecked")
@@ -617,9 +621,9 @@ public class VenCompra extends javax.swing.JFrame {
                             .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 289, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(368, 368, 368)
+                        .addGap(380, 380, 380)
                         .addComponent(btnAgregarCarrito)))
-                .addContainerGap(342, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -677,7 +681,7 @@ public class VenCompra extends javax.swing.JFrame {
 
     private void btnCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarteleraActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPrincipal venPrincipal = new VenPrincipal(cliente);
+        VenPrincipal venPrincipal = new VenPrincipal(cliente, carrito);
         venPrincipal.setVisible(true);
         this.dispose();
       
@@ -685,28 +689,28 @@ public class VenCompra extends javax.swing.JFrame {
 
     private void btnCombosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombosActionPerformed
         String usser = txtUserEnSession.getText();
-        VenCombos venCombos = new VenCombos(cliente);
+        VenCombos venCombos = new VenCombos(cliente, carrito);
         venCombos.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCombosActionPerformed
 
     private void btnMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMembresiaActionPerformed
         String usser = txtUserEnSession.getText();
-        VenMembresia venMembresia = new VenMembresia(cliente);
+        VenMembresia venMembresia = new VenMembresia(cliente, carrito);
         venMembresia.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnMembresiaActionPerformed
 
     private void btnPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromocionesActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPromo venPromo = new VenPromo(cliente);
+        VenPromo venPromo = new VenPromo(cliente, carrito);
         venPromo.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPromocionesActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPerfil venPerfil = new VenPerfil(cliente);
+        VenPerfil venPerfil = new VenPerfil(cliente, carrito);
         venPerfil.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPerfilActionPerformed
@@ -734,7 +738,7 @@ public class VenCompra extends javax.swing.JFrame {
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         int numSillas = Integer.parseInt(txtNumSillas.getText());
         float ValorCompra = 14000 * numSillas;
-        VenPago venPago = new VenPago(ValorCompra, cliente);
+        VenPago venPago = new VenPago(cliente, carrito);
         venPago.setVisible(true);
         this.dispose();     
     }//GEN-LAST:event_btnConfirmarActionPerformed
@@ -746,65 +750,13 @@ public class VenCompra extends javax.swing.JFrame {
 
     private void btnCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarritoActionPerformed
         String usser = txtUserEnSession.getText();
-        VenCarrito venCarrito = new VenCarrito(cliente);
+        VenCarrito venCarrito = new VenCarrito(cliente, carrito);
         venCarrito.setVisible(true);
     }//GEN-LAST:event_btnCarritoActionPerformed
 
     private void btnAgregarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCarritoActionPerformed
-        int cantidad;
-        try {
-            cantidad = Integer.parseInt(txtNumSillas.getText().trim());
-        } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Cantidad inválida.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
-        if (cantidad <= 0) {
-            JOptionPane.showMessageDialog(this, "Selecciona al menos 1 silla.", "Aviso",
-                    JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        if (cantidad > 31) {
-            JOptionPane.showMessageDialog(this, "Máximo 31 sillas.", "Aviso",
-                    JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-
-        btnAgregarCarrito.setEnabled(false);
-
-        new javax.swing.SwingWorker<Boolean, Void>() {
-            @Override
-            protected Boolean doInBackground() throws Exception {
-                boolean todoOk = true;
-                for (int i = 1; i <= cantidad; i++) {
-                    boolean ok = carritoSvc.agregarEntrada(numSala, i);
-                    if (!ok) todoOk = false;
-                }
-                return todoOk;
-            }
-
-            @Override
-            protected void done() {
-                btnAgregarCarrito.setEnabled(true);
-                try {
-                    boolean exito = get();
-                    if (exito) {
-                        JOptionPane.showMessageDialog(VenCompra.this,
-                                "Entradas agregadas al carrito: " + cantidad,
-                                "OK", JOptionPane.INFORMATION_MESSAGE);
-                        txtNumSillas.setText("0");
-                    } else {
-                        JOptionPane.showMessageDialog(VenCompra.this,
-                                "No se pudieron agregar todas las entradas.",
-                                "Error", JOptionPane.ERROR_MESSAGE);
-                    }
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(VenCompra.this,
-                            "Error conectando con el servidor: " + e.getMessage(),
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }.execute();
+        int cantidad = Integer.parseInt(txtNumSillas.getText());
+        
     }//GEN-LAST:event_btnAgregarCarritoActionPerformed
 
     private void txtNumSillasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumSillasActionPerformed
@@ -843,44 +795,7 @@ public class VenCompra extends javax.swing.JFrame {
     
     
   
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VenCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VenCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VenCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VenCompra.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VenCompra(null, null).setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CbSelectCIty;

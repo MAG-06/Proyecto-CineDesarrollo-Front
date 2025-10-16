@@ -1,26 +1,31 @@
 package vistas;
 
+import java.io.IOException;
 import java.util.Random;
 import javax.swing.JOptionPane;
 import modelos.Client;
 import service.CarritoServiceFront;
 import javax.swing.SwingWorker;
 import modelos.Bill;
+import modelos.Car;
 
 public class VenPago extends javax.swing.JFrame {
     
-    private final service.CarritoServiceFront carritoSvc = new service.CarritoServiceFront();
-    private final modelos.Client cliente;
+    private final service.CarritoServiceFront carritoService = new service.CarritoServiceFront();
     
-    private float valorCompra;
+    private final modelos.Client cliente;
+    private Car carrito;
+    
+    
 
-    public VenPago(float valorCompra, Client cliente) {
+    public VenPago(Client cliente, Car carrito) {
         initComponents();
         this.cliente = cliente;
-        lblValorPagar.setText("Su valor a pagar es: " + valorCompra);
+        this.carrito = carrito;
+        lblValorPagar.setText("Su valor a pagar es: " + carrito.getPrecioFinal());
         setLocationRelativeTo(this);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        this.valorCompra = valorCompra;
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -194,77 +199,49 @@ public class VenPago extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPagarActionPerformed
-        btnPagar.setEnabled(false);
-        btnCancelar.setEnabled(false);
+        Random ra = new Random();  
+        try {
+            
+        if (carrito == null || carrito.getCombos() == null || carrito.getCombos().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tu carrito no tiene combos.");
+            return;
+        }
+        
+        if (carrito.getPrecioFinal() <= 0.0) {
+            JOptionPane.showMessageDialog(this, "No puedes pagar 0 pesos");
+            return;
+        }
 
-        new javax.swing.SwingWorker<Boolean, Void>() {
+        
+        Bill factura = new Bill(ra.nextInt(3000) + 1, cliente.getCedula(), carrito.getPrecioFinal(), "CC", null);
 
-            // variables para pasar del background al done()
-            private modelos.Car carSnapshot;
-            private String facturaTexto;
-   
+        Bill guardada = carritoService.agregarCarritoEnFactura(carrito, factura);
+        if (guardada == null) {
+            JOptionPane.showMessageDialog(this, "No se ha podido realizar el pago");
+            return;
+        }
 
-            @Override
-            protected Boolean doInBackground() throws Exception {
-                // 1) Obtener snapshot del carrito
-                carSnapshot = carritoSvc.obtenerCarrito();
+        JOptionPane.showMessageDialog(this, "Gracias por su compra");
+        cliente.getHistorial().add(guardada);
+        carritoService.vaciarCarrito(carrito);
+        this.dispose();
 
-                // 2) Construir la factura con ese snapshot
-                facturaTexto = construirFacturaDesdeCar(cliente, carSnapshot, "Tarjeta");
-                
-                
-
-                // 3) Vaciar el carrito (backend ya existente)
-                return carritoSvc.vaciarCarrito();
-            }
-
-            @Override
-            protected void done() {
-                try {
-                    boolean ok = get();
-                    if (ok) {
-                        javax.swing.JOptionPane.showMessageDialog(VenPago.this, "Su pago ha sido exitoso");
-                    } else {
-                        javax.swing.JOptionPane.showMessageDialog(VenPago.this, "No se pudo vaciar el carrito", "Aviso",
-                                javax.swing.JOptionPane.WARNING_MESSAGE);
-                    }
-                } catch (Exception ex) {
-                    javax.swing.JOptionPane.showMessageDialog(VenPago.this, "Error: " + ex.getMessage(), "Error",
-                            javax.swing.JOptionPane.ERROR_MESSAGE);
-                } finally {
-                    // 4) Ir al perfil mostrando la factura de la compra realizada
-                    new vistas.VenPerfil(cliente, facturaTexto).setVisible(true);
-                    VenPago.this.dispose();
-                }
-            }
-        }.execute();
+    } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al conectar con el servidor");                 
+    }
+        
     }//GEN-LAST:event_btnPagarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         JOptionPane.showMessageDialog(null, "Transaccion cancelada");
-        VenPrincipal venPrincipal = new VenPrincipal(cliente);
+        VenPrincipal venPrincipal = new VenPrincipal(cliente, carrito);
         venPrincipal.setVisible(true);
         this.dispose();        
-        vaciarCarritoYVolver();
+        
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void vaciarCarritoYVolver() {
-        btnPagar.setEnabled(false);
-        btnCancelar.setEnabled(false);
-
-        new SwingWorker<Boolean, Void>() {
-            @Override
-            protected Boolean doInBackground() throws Exception {
-                return carritoSvc.vaciarCarrito();
-            }
-            @Override
-            protected void done() {
-                try { get(); } catch (Exception ignored) {}
-                new VenPrincipal(cliente).setVisible(true);
-                dispose();
-            }
-        }.execute();
-    }
+  
     
     private String construirFacturaDesdeCar(modelos.Client cliente, modelos.Car car, String metodoPago) {
         if (car == null) return "No se pudo obtener el carrito.";
@@ -307,40 +284,7 @@ public class VenPago extends javax.swing.JFrame {
         sb.append("===========================\n");
         return sb.toString();
     }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VenPago.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VenPago.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VenPago.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VenPago.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VenPago(0,null).setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;

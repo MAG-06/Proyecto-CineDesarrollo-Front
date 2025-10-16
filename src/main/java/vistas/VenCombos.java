@@ -1,21 +1,28 @@
 package vistas;
 
+import api.ComboApiService;
+import java.io.IOException;
 import modelos.Client;
 import service.CarritoServiceFront;
 import modelos.Car;
 import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
+import modelos.Food;
+import service.ComboServiceFront;
 
 public class VenCombos extends javax.swing.JFrame {       
 
     private Client cliente;
+    private Car carrito;
     
-    private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
+    private final CarritoServiceFront carritoService = new CarritoServiceFront();
+    private final ComboServiceFront ComboService = new ComboServiceFront();
     
-    public VenCombos(Client cliente) {
+    public VenCombos(Client cliente, Car carrito) {
         initComponents();
         setLocationRelativeTo(this);
         this.cliente = cliente;
+        this.carrito = carrito;
         txtUserEnSession.setText(cliente.getNombre());
     }
 
@@ -320,39 +327,62 @@ public class VenCombos extends javax.swing.JFrame {
 
     private void btnCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarteleraActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPrincipal venPrincipal = new VenPrincipal(cliente);
+        VenPrincipal venPrincipal = new VenPrincipal(cliente, carrito);
         venPrincipal.setVisible(true);
         this.dispose();     
     }//GEN-LAST:event_btnCarteleraActionPerformed
 
     private void btnMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMembresiaActionPerformed
         String usser = txtUserEnSession.getText();
-        VenMembresia venMembresia = new VenMembresia(cliente);
+        VenMembresia venMembresia = new VenMembresia(cliente, carrito);
         venMembresia.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnMembresiaActionPerformed
 
     private void btnCombosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombosActionPerformed
         String usser = txtUserEnSession.getText();
-        VenCombos venCombos = new VenCombos(cliente);
+        VenCombos venCombos = new VenCombos(cliente, carrito);
         venCombos.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCombosActionPerformed
 
     private void btnPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromocionesActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPromo venPromo = new VenPromo(cliente);
+        VenPromo venPromo = new VenPromo(cliente, carrito);
         venPromo.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPromocionesActionPerformed
 
     private void btnCombo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo1ActionPerformed
-      agregarAlCarritoAsync(1);
+        try {
+          Food combo1 = ComboService.buscarCombo(1);  
+          
+        if (combo1 == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró el combo en el servidor.");
+            return;
+        }
+          
+          Car actualizado = carritoService.agregarCombo(carrito, combo1);
+          
+          if(actualizado == null) {
+            JOptionPane.showMessageDialog(this, "No se pudo agregar el combo al carrito");              
+          }
+          
+          this.carrito = actualizado; 
+          JOptionPane.showMessageDialog(this, "Combo agregado correctamente.\nTotal: $" + carrito.getPrecioFinal());
+          
+          
+        } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al conectar con el servidor");                  
+        }
+        
+        
     }//GEN-LAST:event_btnCombo1ActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPerfil venPerfil = new VenPerfil(cliente);
+        VenPerfil venPerfil = new VenPerfil(cliente, carrito);
         venPerfil.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPerfilActionPerformed
@@ -364,92 +394,137 @@ public class VenCombos extends javax.swing.JFrame {
 
     private void btnCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarritoActionPerformed
         String usser = txtUserEnSession.getText();
-        VenCarrito venCarrito = new VenCarrito(cliente);
+        VenCarrito venCarrito = new VenCarrito(cliente, carrito);
         venCarrito.setVisible(true);
     }//GEN-LAST:event_btnCarritoActionPerformed
 
     private void btnCombo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo2ActionPerformed
-     agregarAlCarritoAsync(2);
+        try {
+          Food combo2 = ComboService.buscarCombo(2);  
+          
+        if (combo2 == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró el combo en el servidor.");
+            return;
+        }
+          
+          Car actualizado = carritoService.agregarCombo(carrito, combo2);
+          
+          if(actualizado == null) {
+            JOptionPane.showMessageDialog(this, "No se pudo agregar el combo al carrito");              
+          }
+          
+          this.carrito = actualizado; 
+          JOptionPane.showMessageDialog(this, "Combo agregado correctamente.\nTotal: $" + carrito.getPrecioFinal());
+          
+          
+        } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al conectar con el servidor");                  
+        } 
     }//GEN-LAST:event_btnCombo2ActionPerformed
 
     private void btnCombo3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo3ActionPerformed
-      agregarAlCarritoAsync(3);
+       try {
+          Food combo3 = ComboService.buscarCombo(3);  
+          
+        if (combo3 == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró el combo en el servidor.");
+            return;
+        }
+          
+          Car actualizado = carritoService.agregarCombo(carrito, combo3);
+          
+          if(actualizado == null) {
+            JOptionPane.showMessageDialog(this, "No se pudo agregar el combo al carrito");              
+          }
+          
+          this.carrito = actualizado; 
+          JOptionPane.showMessageDialog(this, "Combo agregado correctamente.\nTotal: $" + carrito.getPrecioFinal());
+          
+          
+        } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al conectar con el servidor");                  
+        } 
     }//GEN-LAST:event_btnCombo3ActionPerformed
 
     private void btnCombo4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo4ActionPerformed
-     agregarAlCarritoAsync(4);
+         try {
+          Food combo4 = ComboService.buscarCombo(4);  
+          
+        if (combo4 == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró el combo en el servidor.");
+            return;
+        }
+          
+          Car actualizado = carritoService.agregarCombo(carrito, combo4);
+          
+          if(actualizado == null) {
+            JOptionPane.showMessageDialog(this, "No se pudo agregar el combo al carrito");              
+          }
+          
+          this.carrito = actualizado; 
+          JOptionPane.showMessageDialog(this, "Combo agregado correctamente.\nTotal: $" + carrito.getPrecioFinal());
+          
+          
+        } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al conectar con el servidor");                  
+        }    
     }//GEN-LAST:event_btnCombo4ActionPerformed
 
     private void btnCombo5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo5ActionPerformed
-       agregarAlCarritoAsync(5);
+        try {
+          Food combo5 = ComboService.buscarCombo(5);  
+          
+        if (combo5 == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró el combo en el servidor.");
+            return;
+        }
+          
+          Car actualizado = carritoService.agregarCombo(carrito, combo5);
+          
+          if(actualizado == null) {
+            JOptionPane.showMessageDialog(this, "No se pudo agregar el combo al carrito");              
+          }
+          
+          this.carrito = actualizado; 
+          JOptionPane.showMessageDialog(this, "Combo agregado correctamente.\nTotal: $" + carrito.getPrecioFinal());
+          
+          
+        } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al conectar con el servidor");                  
+        }      
     }//GEN-LAST:event_btnCombo5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-       agregarAlCarritoAsync(6);
+         try {
+          Food combo6 = ComboService.buscarCombo(6);  
+          
+        if (combo6 == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró el combo en el servidor.");
+            return;
+        }
+          
+          Car actualizado = carritoService.agregarCombo(carrito, combo6);
+          
+          if(actualizado == null) {
+            JOptionPane.showMessageDialog(this, "No se pudo agregar el combo al carrito");              
+          }
+          
+          this.carrito = actualizado; 
+          JOptionPane.showMessageDialog(this, "Combo agregado correctamente.\nTotal: $" + carrito.getPrecioFinal());
+          
+          
+        } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error al conectar con el servidor");                  
+        }     
     }//GEN-LAST:event_jButton6ActionPerformed
     
-    private void agregarAlCarritoAsync(int idCombo) {
-        new SwingWorker<Boolean, Void>() {
-            @Override
-            protected Boolean doInBackground() throws Exception {
-                return carritoSvc.agregarCombo(idCombo);
-            }
-            @Override
-            protected void done() {
-                try {
-                    boolean ok = get();
-                    if (ok) {
-                        Car c = carritoSvc.obtenerCarrito();
-                        double total = (c != null) ? c.getPrecioFinal() : 0.0;
-                        JOptionPane.showMessageDialog(VenCombos.this,
-                            "Combo agregado al carrito.\nTotal actual: $ " + (long) total);
-                    } else {
-                        JOptionPane.showMessageDialog(VenCombos.this,
-                            "No se pudo agregar el combo", "Aviso",
-                            JOptionPane.WARNING_MESSAGE);
-                    }
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(VenCombos.this,
-                        "Error: " + ex.getMessage(), "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }.execute();
-    }
+ 
   
-    
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VenCombos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VenCombos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VenCombos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VenCombos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VenCombos(null).setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CbSelectCIty;
