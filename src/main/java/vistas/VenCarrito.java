@@ -6,22 +6,21 @@ import modelos.Food;
 import javax.swing.SwingWorker;
 import javax.swing.JOptionPane;
 import modelos.Client;
+import modelos.Ticket;
 
 public class VenCarrito extends javax.swing.JFrame {
     
     private Client cliente;
+    private Car carrito;
     private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
    
-    public VenCarrito(Client cliente) {
+    public VenCarrito(Client cliente, Car carrito) {
         initComponents();
         setLocationRelativeTo(this);
-        cargarCarrito(); 
         this.cliente = cliente;   
-        txtUser.setEditable(false);
-        txtCombos.setEditable(false);
-        txtTicket.setEditable(false);
-        txtIdCarrito.setEditable(false);
-        txtTotal.setEditable(false);
+        this.carrito = carrito;
+        refresh(cliente, carrito);
+
     }
 
     
@@ -54,15 +53,21 @@ public class VenCarrito extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(204, 204, 204));
 
+        txtCombos.setEditable(false);
         txtCombos.setColumns(20);
         txtCombos.setRows(5);
         jScrollPane1.setViewportView(txtCombos);
 
+        txtTicket.setEditable(false);
         txtTicket.setColumns(20);
         txtTicket.setRows(5);
         jScrollPane2.setViewportView(txtTicket);
 
+        txtIdCarrito.setEditable(false);
+
         jLabel2.setText("Total:");
+
+        txtTotal.setEditable(false);
 
         btnComprar.setBackground(new java.awt.Color(153, 153, 153));
         btnComprar.setText("Comprar");
@@ -116,6 +121,7 @@ public class VenCarrito extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        txtUser.setEditable(false);
         txtUser.setBackground(new java.awt.Color(51, 51, 51));
         txtUser.setEnabled(false);
         txtUser.setFocusable(false);
@@ -188,105 +194,38 @@ public class VenCarrito extends javax.swing.JFrame {
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
         float total = Float.valueOf(txtTotal.getText());
-        VenPago venPago = new VenPago(total, cliente); // cliente ya NO será null
+        VenPago venPago = new VenPago(cliente, carrito); 
         venPago.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnComprarActionPerformed
 
-    private void cargarCarrito() {
-        new SwingWorker<Car, Void>() {
-            @Override
-            protected Car doInBackground() throws Exception {
-                return carritoSvc.obtenerCarrito();
-            }
+    public void refresh(Client cliente, Car carrito) {
+           this.cliente = cliente;
+           this.carrito = carrito;
 
-            @Override
-            protected void done() {
-                try {
-                    Car c = get();
-                    txtCombos.setText("");
-                    txtTicket.setText("");
-                    txtIdCarrito.setText("");
+           txtUser.setText(cliente != null ? cliente.getNombre() : "");
+           txtIdCarrito.setText(String.valueOf(carrito.getIdCarrito()));
 
-                    if (c == null) {
-                        txtCombos.setText("No se pudo obtener el carrito.");
-                        txtTicket.setText("No se pudo obtener el carrito.");
-                        txtTotal.setText("0");
-                        return;
-                    }
-                    txtIdCarrito.setText(String.valueOf(c.getIdCarrito()));
-                    
-                    if (c.getEntradas() != null && !c.getEntradas().isEmpty()) {
-                        StringBuilder sbE = new StringBuilder();
-                        for (modelos.Ticket t : c.getEntradas()) {
-                            sbE.append("Entrada #").append(t.getNumEntrada())
-                               .append("  $").append(t.getPrecioEntrada());
+           // Combos
+           StringBuilder sbCombos = new StringBuilder();
+           for (Food f : carrito.getCombos()) {
+               sbCombos.append(f.getIdCombo()).append(" - ").append(f.getDescripcion())
+                       .append("  $").append(f.getPrecio()).append("\n");
+           }
+           txtCombos.setText(sbCombos.toString());
 
-                            if (t.getSala() != null 
-                                    && t.getSala().getSillas() != null 
-                                    && t.getSala().getSillas().length > 0) {
-                                sbE.append("  |  Sala ").append(t.getSala().getNumSala())
-                                   .append("  -  Silla ").append(t.getSala().getSillas()[0].getNumSilla());
-                            }
-                            sbE.append("\n");
-                        }
-                        txtTicket.setText(sbE.toString());
-                    } else {
-                        txtTicket.setText("No hay entradas en el carrito.");
-                    }
-                    if (c.getCombos() != null && !c.getCombos().isEmpty()) {
-                        StringBuilder sbC = new StringBuilder();
-                        for (Food f : c.getCombos()) {
-                            sbC.append(" $").append((long) f.getPrecio())
-                               .append("  |  ").append(f.getDescripcion())
-                               .append("\n");
-                        }
-                        txtCombos.setText(sbC.toString());
-                    } else {
-                        txtCombos.setText("No hay combos en el carrito.");
-                    }
-                    txtTotal.setText(String.format("%.0f", c.getPrecioFinal()));
+           // Entradas
+           StringBuilder sbTickets = new StringBuilder();
+           for (Ticket t : carrito.getEntradas()) {
+               sbTickets.append("Sala ").append(t.getSala())
+                        .append(" / Asiento ").append(t.getNumEntrada() != 0 ? t.getNumEntrada() : "-")
+                        .append("  $").append(t.getPrecioEntrada()).append("\n");
+           }
+           txtTicket.setText(sbTickets.toString());
 
-                } catch (Exception e) {
-                    JOptionPane.showMessageDialog(VenCarrito.this,
-                            "Error cargando carrito: " + e.getMessage(),
-                            "Error", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        }.execute();
-    }
+           txtTotal.setText(String.format("%.0f", carrito.getPrecioFinal())); // o formato moneda
+       }
     
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VenCarrito.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VenCarrito.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VenCarrito.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VenCarrito.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VenCarrito(null).setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnComprar;

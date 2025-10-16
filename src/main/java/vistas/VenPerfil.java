@@ -16,30 +16,24 @@ import modelos.Ticket;
 public class VenPerfil extends javax.swing.JFrame {
     
     private Client cliente;
+    private Car carrito;
     private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
     private String facturaInicial;
 
-    public VenPerfil(Client cliente) {
-        this(cliente, null);
-    }
 
-    public VenPerfil(Client cliente, String facturaInicial) {
+
+    public VenPerfil(Client cliente, Car carrito) {
         this.cliente = cliente;
-        this.facturaInicial = facturaInicial;
+        this.carrito = carrito;
         initComponents();
         setLocationRelativeTo(this);
         txtUserEnSession.setText(cliente.getNombre());
         organizarImagen(lblUserEdit, "/imagenes/editUser.png");
         organizarTextos();
 
-        if (facturaInicial != null) {
-            txtFact.setText(facturaInicial);
-            txtFact.setCaretPosition(0);
-        } else {
-            cargarFactura();
-        }
+  
         
-        //cargarHistorial();
+        cargarHistorial();
     }
 
 
@@ -176,14 +170,14 @@ public class VenPerfil extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(CbSelectCIty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txtUserEnSession, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtUserEnSession, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPerfil)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCarrito)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBot)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,14 +388,14 @@ public class VenPerfil extends javax.swing.JFrame {
 
     private void btnCombosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombosActionPerformed
         String usser = txtUserEnSession.getText();
-        VenCombos venCombos = new VenCombos(cliente);
+        VenCombos venCombos = new VenCombos(cliente, carrito);
         venCombos.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCombosActionPerformed
 
     private void btnMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMembresiaActionPerformed
         String usser = txtUserEnSession.getText();
-        VenMembresia venMembresia = new VenMembresia(cliente);
+        VenMembresia venMembresia = new VenMembresia(cliente, carrito);
         venMembresia.setVisible(true);
         this.dispose();
         
@@ -409,14 +403,14 @@ public class VenPerfil extends javax.swing.JFrame {
 
     private void btnPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromocionesActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPromo venPromo = new VenPromo(cliente);
+        VenPromo venPromo = new VenPromo(cliente, carrito);
         venPromo.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPromocionesActionPerformed
 
     private void btnCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarteleraActionPerformed
         String usser = txtUserEnSession.getText();
-        VenPrincipal venPrinciapal = new VenPrincipal(cliente);
+        VenPrincipal venPrinciapal = new VenPrincipal(cliente, carrito);
         venPrinciapal.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCarteleraActionPerformed
@@ -428,7 +422,7 @@ public class VenPerfil extends javax.swing.JFrame {
 
     private void btnCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarritoActionPerformed
         String usser = txtUserEnSession.getText();
-        VenCarrito venCarrito = new VenCarrito(cliente);
+        VenCarrito venCarrito = new VenCarrito(cliente, carrito);
         venCarrito.setVisible(true);
     }//GEN-LAST:event_btnCarritoActionPerformed
 
@@ -460,100 +454,61 @@ public class VenPerfil extends javax.swing.JFrame {
        
     }
     
-    private void cargarFactura() {
-        try {
-        Car car = carritoSvc.obtenerCarrito();
-        if (car == null) {
-            txtFact.setText("No se pudo obtener el carrito.");
-            return;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        sb.append("========= FACTURA =========\n");
-        sb.append("Cliente: ").append(cliente != null ? cliente.getNombre() : "N/D").append("\n");
-        sb.append("ID Carrito: ").append(car.getIdCarrito()).append("\n\n");
-        sb.append("Entradas:\n");
-        if (car.getEntradas() != null && !car.getEntradas().isEmpty()) {
-            int i = 1;
-            for (Ticket t : car.getEntradas()) {
-                sb.append("  ").append(i++).append(") ")
-                  .append("Sala ").append(t.getSala() != null ? t.getSala().getNumSala() : "?")
-                  .append(" | Silla ").append(t.getNumEntrada())
-                  .append(" | $").append((long) t.getPrecioEntrada())
-                  .append("\n");
-            }
-        } else {
-            sb.append("  (No hay entradas)\n");
-        }
-        sb.append("\nCombos:\n");
-        if (car.getCombos() != null && !car.getCombos().isEmpty()) {
-            int i = 1;
-            for (Food f : car.getCombos()) {
-                sb.append("  ").append(i++).append(") ")
-                  .append(f.getDescripcion())
-                  .append(" | $").append((long) f.getPrecio())
-                  .append("\n");
-            }
-        } else {
-            sb.append("  (No hay combos)\n");
-        }
-
-        sb.append("\n---------------------------\n");
-        sb.append("TOTAL: $").append((long) car.getPrecioFinal()).append("\n");
-        sb.append("Método de pago: ").append("Pendiente").append("\n");
-        sb.append("===========================\n");
-
-        txtFact.setText(sb.toString());
-        txtFact.setCaretPosition(0);
-
-        } catch (Exception ex) {
-            txtFact.setText("Error cargando factura: " + ex.getMessage());
-        }
-    }
-    
-    /*public void cargarHistorial() {
-        Bill factura = null;
-        for(int i = 0; i < cliente.getHistorial().size(); i++) {
-            factura = cliente.getHistorial().get(i); 
-        }
-        if(factura != null) {
-            txtFact.setText("Valor total: " + factura.getValorFactura());
-        }
-        
-    }*/
   
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VenPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VenPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VenPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VenPerfil.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new VenPerfil(null).setVisible(true);
-            }
-        });
+    
+   public void cargarHistorial() {
+    if (cliente.getHistorial() == null || cliente.getHistorial().isEmpty()) {
+        txtFact.setText("Sin compras aún.");
+        return;
     }
+
+    StringBuilder sb = new StringBuilder();
+
+    for (Bill f : cliente.getHistorial()) {
+        sb.append("───────────────────────────────\n");
+        sb.append("🧾 Factura #").append(f.getIdFactura()).append("\n");
+        sb.append("Cliente: ").append(cliente.getNombre()).append("\n");
+
+        Car carrito = f.getCarrito();
+        if (carrito != null) {
+
+            // Combos comprados
+            if (carrito.getCombos() != null && !carrito.getCombos().isEmpty()) {
+                sb.append("\n🍔 Combos:\n");
+                for (Food combo : carrito.getCombos()) {
+                    sb.append("   - ").append(combo.getDescripcion())
+                      .append("  ($").append(String.format("%.0f", combo.getPrecio())).append(")\n");
+                }
+            } else {
+                sb.append("\n🍔 Combos: ninguno\n");
+            }
+
+            // Entradas compradas
+            if (carrito.getEntradas() != null && !carrito.getEntradas().isEmpty()) {
+                sb.append("\n🎟️ Entradas:\n");
+                for (Ticket t : carrito.getEntradas()) {
+                    sb.append("   - Entrada #").append(t.getNumEntrada())
+                      .append("  | Sala: ").append(t.getSala() != null ? t.getSala().getNumSala() : "-")
+                      .append("  | Precio: $").append(String.format("%.0f", t.getPrecioEntrada()))
+                      .append("\n");
+                }
+                sb.append("   Cantidad de entradas: ").append(carrito.getEntradas().size()).append("\n");
+            } else {
+                sb.append("\n🎟️ Entradas: ninguna\n");
+            }
+
+            sb.append("\n💰 Total: $").append(String.format("%.0f", f.getValorFactura())).append("\n");
+        } else {
+            sb.append("⚠️ No hay información del carrito en esta factura.\n");
+        }
+
+        sb.append("───────────────────────────────\n\n");
+    }
+
+    txtFact.setText(sb.toString());
+}
+  
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CbSelectCIty;

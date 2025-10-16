@@ -2,8 +2,13 @@
 package vistas;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JOptionPane;
+import modelos.Car;
 import modelos.Client;
+import modelos.Food;
+import modelos.Ticket;
 import service.ClienteServiceFront;
 
 
@@ -134,7 +139,7 @@ public class VenLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-        
+        Random ra = new Random();
         try {
         if(txtUser.getText().isEmpty() || txtPass.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Rellene los campos para iniciar sesion");
@@ -159,8 +164,8 @@ public class VenLogin extends javax.swing.JFrame {
             return;   
             
           } else {
-              
-            VenPrincipal venPrincipal = new VenPrincipal(cliente);
+            Car car = new Car(ra.nextInt(1000)+1, new ArrayList<Ticket>(), new ArrayList<Food>(), "CC", false, 0.0);
+            VenPrincipal venPrincipal = new VenPrincipal(cliente, car);
             venPrincipal.setVisible(true);  
             this.dispose();   
           }

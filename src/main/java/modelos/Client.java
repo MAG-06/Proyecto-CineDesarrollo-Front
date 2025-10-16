@@ -11,9 +11,8 @@ public class Client extends User {
 	private String ciudad;
 	private boolean estadoMembresia;
 	private ArrayList<Bill> historial;
-	private Car carrito;
 	
-	public Client(String rol, int id, String correo, String contraseña, String cedula, String nombre, String apellido, int edad, String ciudad, boolean estadoMembresia, ArrayList<Bill> historial, Car carrito) {
+	public Client(String rol, int id, String correo, String contraseña, String cedula, String nombre, String apellido, int edad, String ciudad, boolean estadoMembresia, ArrayList<Bill> historial) {
 		super(rol, id, correo, contraseña);
 		this.cedula = cedula;
 		this.nombre = nombre;
@@ -22,7 +21,7 @@ public class Client extends User {
 		this.ciudad = ciudad;
 		this.estadoMembresia = estadoMembresia;
 		this.historial = new ArrayList<>();
-		this.carrito = carrito;
+	
 	}
 
 	public String getCedula() {
@@ -81,13 +80,6 @@ public class Client extends User {
 		this.historial = historial;
 	}
 
-	public Car getCarrito() {
-		return carrito;
-	}
-
-	public void setCarrito(Car carrito) {
-		this.carrito = carrito;
-	}
 	
 }
 
