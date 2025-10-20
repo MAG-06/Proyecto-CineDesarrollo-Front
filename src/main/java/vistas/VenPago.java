@@ -8,10 +8,12 @@ import service.CarritoServiceFront;
 import javax.swing.SwingWorker;
 import modelos.Bill;
 import modelos.Car;
+import service.ClienteServiceFront;
 
 public class VenPago extends javax.swing.JFrame {
     
     private final service.CarritoServiceFront carritoService = new service.CarritoServiceFront();
+    private final ClienteServiceFront clienteService = new ClienteServiceFront();
     
     private final modelos.Client cliente;
     private Car carrito;
@@ -220,10 +222,18 @@ public class VenPago extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No se ha podido realizar el pago");
             return;
         }
+        
+        if(!clienteService.agregarFacturaACliente(cliente.getCedula(), guardada)) {
+           JOptionPane.showMessageDialog(this, "No se ha podido agregar la factura al cliente"); 
+           return;
+        }
+        
+        if(!carritoService.vaciarCarrito(carrito)) {
+          JOptionPane.showMessageDialog(this, "No se ha podido vaciar el carrito");   
+          return;
+        }
 
         JOptionPane.showMessageDialog(this, "Gracias por su compra");
-        cliente.getHistorial().add(guardada);
-        carritoService.vaciarCarrito(carrito);
         this.dispose();
 
     } catch (IOException e) {

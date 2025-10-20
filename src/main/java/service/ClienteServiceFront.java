@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import modelos.Bill;
 import modelos.Client;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -64,6 +65,29 @@ public class ClienteServiceFront {
             return response.body(); 
         } else {
             return null;
+        }
+    }
+        
+    public List<Bill> listarFacturasDelCliente(String cedula) throws IOException {
+        Call<List<Bill>> call = api.listarFacturasDelCliente(cedula);
+        Response<List<Bill>> response = call.execute();
+        if (response.isSuccessful()) {
+            return response.body();
+        } else {
+            System.err.println("Error al listar facturas del cliente. Código: " + response.code());
+            return null;
+        }
+    }
+
+    public boolean agregarFacturaACliente(String cedula, Bill factura) throws IOException {
+        Call<Bill> call = api.agregarFacturaACliente(cedula, factura);
+        Response<Bill> response = call.execute();
+        if (response.isSuccessful() && response.code() == 201) {
+            System.out.println("Factura agregada correctamente.");
+            return true;
+        } else {
+            System.err.println("Error al agregar la factura. Código: " + response.code());
+            return false;
         }
     }
     

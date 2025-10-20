@@ -2,7 +2,9 @@
 package vistas;
 
 import java.awt.Image;
+import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -12,13 +14,14 @@ import service.CarritoServiceFront;
 import modelos.Car;
 import modelos.Food;
 import modelos.Ticket;
+import service.ClienteServiceFront;
 
 public class VenPerfil extends javax.swing.JFrame {
     
     private Client cliente;
     private Car carrito;
     private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
-    private String facturaInicial;
+    private final ClienteServiceFront clienteService = new ClienteServiceFront();
 
 
 
@@ -69,6 +72,7 @@ public class VenPerfil extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtFact = new javax.swing.JTextArea();
+        btnCerrarSesion = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -294,6 +298,13 @@ public class VenPerfil extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnCerrarSesion.setText("Cerrar sesion");
+        btnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCerrarSesionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -303,21 +314,27 @@ public class VenPerfil extends javax.swing.JFrame {
                 .addComponent(lblUserEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(80, 80, 80)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(35, 35, 35)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtApellido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtCorreo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel1)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(139, 139, 139)
-                        .addComponent(txtCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(txtEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(35, 35, 35)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(txtApellido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txtCorreo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel1)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(139, 139, 139)
+                                .addComponent(txtCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCerrarSesion)
+                        .addGap(131, 131, 131)))
                 .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -347,6 +364,8 @@ public class VenPerfil extends javax.swing.JFrame {
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addComponent(txtCiudad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(70, 70, 70)
+                                .addComponent(btnCerrarSesion)
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(81, 81, 81)
@@ -426,6 +445,12 @@ public class VenPerfil extends javax.swing.JFrame {
         venCarrito.setVisible(true);
     }//GEN-LAST:event_btnCarritoActionPerformed
 
+    private void btnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarSesionActionPerformed
+        VenLogin venLogin = new VenLogin();
+        venLogin.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnCerrarSesionActionPerformed
+
     
     private void organizarImagen(JLabel label, String rutaImagen) {
     URL url = getClass().getResource(rutaImagen);
@@ -456,57 +481,82 @@ public class VenPerfil extends javax.swing.JFrame {
     
   
     
-   public void cargarHistorial() {
-    if (cliente.getHistorial() == null || cliente.getHistorial().isEmpty()) {
-        txtFact.setText("Sin compras aún.");
-        return;
-    }
+    public void cargarHistorial() {
+        // Mensaje inicial mientras carga
+        txtFact.setText("Cargando historial...");
 
-    StringBuilder sb = new StringBuilder();
+        new javax.swing.SwingWorker<String, Void>() {
+            @Override
+            protected String doInBackground() {
+                try {
+                    // 1) Traer del backend
+                    List<Bill> facturas = clienteService.listarFacturasDelCliente(cliente.getCedula());
 
-    for (Bill f : cliente.getHistorial()) {
-        sb.append("───────────────────────────────\n");
-        sb.append("🧾 Factura #").append(f.getIdFactura()).append("\n");
-        sb.append("Cliente: ").append(cliente.getNombre()).append("\n");
+                    // 2) Render inline (sin métodos extra)
+                    if (facturas == null || facturas.isEmpty()) {
+                        return "Sin compras aún.";
+                    }
 
-        Car carrito = f.getCarrito();
-        if (carrito != null) {
+                    StringBuilder sb = new StringBuilder();
+                    for (Bill f : facturas) {
+                        sb.append("───────────────────────────────\n");
+                        sb.append("🧾 Factura #").append(f.getIdFactura()).append("\n");
+                        sb.append("Cliente: ").append(cliente != null ? cliente.getNombre() : "-").append("\n");
 
-            // Combos comprados
-            if (carrito.getCombos() != null && !carrito.getCombos().isEmpty()) {
-                sb.append("\n🍔 Combos:\n");
-                for (Food combo : carrito.getCombos()) {
-                    sb.append("   - ").append(combo.getDescripcion())
-                      .append("  ($").append(String.format("%.0f", combo.getPrecio())).append(")\n");
+                        Car carrito = f.getCarrito();
+                        if (carrito != null) {
+                            // Combos
+                            if (carrito.getCombos() != null && !carrito.getCombos().isEmpty()) {
+                                sb.append("\n🍔 Combos:\n");
+                                for (Food combo : carrito.getCombos()) {
+                                    sb.append("   - ").append(combo.getDescripcion())
+                                      .append("  ($").append(String.format("%,.0f", combo.getPrecio())).append(")\n");
+                                }
+                            } else {
+                                sb.append("\n🍔 Combos: ninguno\n");
+                            }
+
+                            // Entradas
+                            if (carrito.getEntradas() != null && !carrito.getEntradas().isEmpty()) {
+                                sb.append("\n🎟️ Entradas:\n");
+                                for (Ticket t : carrito.getEntradas()) {
+                                    sb.append("   - Entrada #").append(t.getNumEntrada())
+                                      .append("  | Sala: ").append(t.getSala() != null ? t.getSala().getNumSala() : "-")
+                                      .append("  | Precio: $").append(String.format("%,.0f", t.getPrecioEntrada()))
+                                      .append("\n");
+                                }
+                                sb.append("   Cantidad de entradas: ").append(carrito.getEntradas().size()).append("\n");
+                            } else {
+                                sb.append("\n🎟️ Entradas: ninguna\n");
+                            }
+
+                            sb.append("\n💰 Total: $").append(String.format("%,.0f", f.getValorFactura())).append("\n");
+                        } else {
+                            sb.append("⚠️ No hay información del carrito en esta factura.\n");
+                        }
+
+                        sb.append("───────────────────────────────\n\n");
+                    }
+
+                    return sb.toString();
+
+                } catch (IOException e) {
+                    return "Error al cargar historial (conexión).";
+                } catch (Exception e) {
+                    return "Error al cargar historial.";
                 }
-            } else {
-                sb.append("\n🍔 Combos: ninguno\n");
             }
 
-            // Entradas compradas
-            if (carrito.getEntradas() != null && !carrito.getEntradas().isEmpty()) {
-                sb.append("\n🎟️ Entradas:\n");
-                for (Ticket t : carrito.getEntradas()) {
-                    sb.append("   - Entrada #").append(t.getNumEntrada())
-                      .append("  | Sala: ").append(t.getSala() != null ? t.getSala().getNumSala() : "-")
-                      .append("  | Precio: $").append(String.format("%.0f", t.getPrecioEntrada()))
-                      .append("\n");
+            @Override
+            protected void done() {
+                try {
+                    txtFact.setText(get());
+                } catch (Exception e) {
+                    txtFact.setText("Error al mostrar historial.");
                 }
-                sb.append("   Cantidad de entradas: ").append(carrito.getEntradas().size()).append("\n");
-            } else {
-                sb.append("\n🎟️ Entradas: ninguna\n");
             }
-
-            sb.append("\n💰 Total: $").append(String.format("%.0f", f.getValorFactura())).append("\n");
-        } else {
-            sb.append("⚠️ No hay información del carrito en esta factura.\n");
-        }
-
-        sb.append("───────────────────────────────\n\n");
+        }.execute();
     }
-
-    txtFact.setText(sb.toString());
-}
   
 
 
@@ -515,6 +565,7 @@ public class VenPerfil extends javax.swing.JFrame {
     private javax.swing.JButton btnBot;
     private javax.swing.JButton btnCarrito;
     private javax.swing.JButton btnCartelera;
+    private javax.swing.JButton btnCerrarSesion;
     private javax.swing.JButton btnCombos;
     private javax.swing.JButton btnMembresia;
     private javax.swing.JButton btnPerfil;
