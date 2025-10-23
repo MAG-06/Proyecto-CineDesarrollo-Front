@@ -373,8 +373,7 @@ public class VenCombos extends javax.swing.JFrame {
           
           
         } catch (IOException e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error al conectar con el servidor");                  
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());    
         }
         
         

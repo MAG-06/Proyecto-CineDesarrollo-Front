@@ -10,6 +10,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HTTP;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -22,7 +23,7 @@ public interface CarritoApiService {
     @POST("api/carrito/combos")
     Call<Car> agregarCombo(@Body Map<String, Object> body);
 
-    @DELETE("api/carrito/combos")
+    @HTTP(method = "DELETE", path = "api/carrito/combos", hasBody = true)
     Call<Car> eliminarCombo(@Body Map<String, Object> body);
 
     @POST("api/carrito/entradas")

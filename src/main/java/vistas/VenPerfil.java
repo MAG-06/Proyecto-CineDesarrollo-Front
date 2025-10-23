@@ -13,6 +13,7 @@ import modelos.Client;
 import service.CarritoServiceFront;
 import modelos.Car;
 import modelos.Food;
+import modelos.Hall;
 import modelos.Ticket;
 import service.ClienteServiceFront;
 
@@ -481,83 +482,107 @@ public class VenPerfil extends javax.swing.JFrame {
     
   
     
-    public void cargarHistorial() {
-        // Mensaje inicial mientras carga
-        txtFact.setText("Cargando historial...");
+   public void cargarHistorial() {
+    txtFact.setText("Cargando historial...");
 
-        new javax.swing.SwingWorker<String, Void>() {
-            @Override
-            protected String doInBackground() {
-                try {
-                    // 1) Traer del backend
-                    List<Bill> facturas = clienteService.listarFacturasDelCliente(cliente.getCedula());
+    new javax.swing.SwingWorker<String, Void>() {
+        @Override
+        protected String doInBackground() {
+            try {
+                List<Bill> facturas = clienteService.listarFacturasDelCliente(cliente.getCedula());
+                if (facturas == null || facturas.isEmpty()) return "Sin compras aún.";
 
-                    // 2) Render inline (sin métodos extra)
-                    if (facturas == null || facturas.isEmpty()) {
-                        return "Sin compras aún.";
-                    }
+                StringBuilder sb = new StringBuilder();
+                for (Bill f : facturas) {
+                    sb.append("───────────────────────────────\n");
+                    sb.append("🧾 Factura #").append(f.getIdFactura()).append("\n");
+                    sb.append("Cliente: ").append(cliente != null ? cliente.getNombre() : "-").append("\n");
 
-                    StringBuilder sb = new StringBuilder();
-                    for (Bill f : facturas) {
-                        sb.append("───────────────────────────────\n");
-                        sb.append("🧾 Factura #").append(f.getIdFactura()).append("\n");
-                        sb.append("Cliente: ").append(cliente != null ? cliente.getNombre() : "-").append("\n");
+                    double totalFactura = 0.0;
+                    try { totalFactura = f.getValorFactura(); } catch (Exception ignore) {}
 
-                        Car carrito = f.getCarrito();
-                        if (carrito != null) {
-                            // Combos
-                            if (carrito.getCombos() != null && !carrito.getCombos().isEmpty()) {
-                                sb.append("\n🍔 Combos:\n");
-                                for (Food combo : carrito.getCombos()) {
-                                    sb.append("   - ").append(combo.getDescripcion())
-                                      .append("  ($").append(String.format("%,.0f", combo.getPrecio())).append(")\n");
-                                }
-                            } else {
-                                sb.append("\n🍔 Combos: ninguno\n");
+                    Car car = f.getCarrito();
+                    if (car != null) {
+                        // COMBOS
+                        List<Food> combos = car.getCombos();
+                        if (combos != null && !combos.isEmpty()) {
+                            sb.append("\n🍔 Combos:\n");
+                            for (Food combo : combos) {
+                                String desc = (combo != null && combo.getDescripcion() != null) ? combo.getDescripcion() : "-";
+                                double precio = 0.0;
+                                try { precio = combo.getPrecio(); } catch (Exception ignore) {}
+                                sb.append("   - ").append(desc)
+                                  .append("  ($").append(String.format("%,.0f", precio)).append(")\n");
                             }
-
-                            // Entradas
-                            if (carrito.getEntradas() != null && !carrito.getEntradas().isEmpty()) {
-                                sb.append("\n🎟️ Entradas:\n");
-                                for (Ticket t : carrito.getEntradas()) {
-                                    sb.append("   - Entrada #").append(t.getNumEntrada())
-                                      .append("  | Sala: ").append(t.getSala() != null ? t.getSala().getNumSala() : "-")
-                                      .append("  | Precio: $").append(String.format("%,.0f", t.getPrecioEntrada()))
-                                      .append("\n");
-                                }
-                                sb.append("   Cantidad de entradas: ").append(carrito.getEntradas().size()).append("\n");
-                            } else {
-                                sb.append("\n🎟️ Entradas: ninguna\n");
-                            }
-
-                            sb.append("\n💰 Total: $").append(String.format("%,.0f", f.getValorFactura())).append("\n");
                         } else {
-                            sb.append("⚠️ No hay información del carrito en esta factura.\n");
+                            sb.append("\n🍔 Combos: ninguno\n");
                         }
 
-                        sb.append("───────────────────────────────\n\n");
+                        // ENTRADAS
+                        List<Ticket> entradas = car.getEntradas();
+                        if (entradas != null && !entradas.isEmpty()) {
+                            sb.append("\n🎟️ Entradas:\n");
+                            for (Ticket t : entradas) {
+                                int num = (t != null) ? t.getNumEntrada() : 0;
+                                int salaNum = (t != null && t.getSala() != null) ? t.getSala().getNumSala() : 0;
+                                String tituloPelicula = "-";
+                                String hora = "-";
+                                String dia = "-";
+
+                                if (t != null && t.getSala() != null) {
+                                    Hall hall = t.getSala();
+                                    if (hall.getMovie() != null && hall.getMovie().getNombre() != null)
+                                        tituloPelicula = hall.getMovie().getNombre();
+                                    if (hall.getHoraInicio() != null)
+                                        hora = hall.getHoraInicio().toString();
+                                    if (hall.getDiaPelicula() != null)
+                                        dia = hall.getDiaPelicula().toString();
+                                }
+
+                                double precio = 0.0;
+                                try { precio = t.getPrecioEntrada(); } catch (Exception ignore) {}
+
+                                sb.append("   - 🎬 ").append(tituloPelicula)
+                                  .append(" | Sala: ").append(salaNum > 0 ? salaNum : "-")
+                                  .append(" | Asiento: ").append(num > 0 ? num : "-")
+                                  .append(" | Día: ").append(dia)
+                                  .append(" | Hora: ").append(hora)
+                                  .append(" | Precio: $").append(String.format("%,.0f", precio))
+                                  .append("\n");
+                            }
+                            sb.append("   Cantidad de entradas: ").append(entradas.size()).append("\n");
+                        } else {
+                            sb.append("\n🎟️ Entradas: ninguna\n");
+                        }
+
+                        sb.append("\n💰 Total: $").append(String.format("%,.0f", totalFactura)).append("\n");
+                    } else {
+                        sb.append("⚠️ No hay información del carrito en esta factura.\n");
+                        sb.append("\n💰 Total: $").append(String.format("%,.0f", totalFactura)).append("\n");
                     }
 
-                    return sb.toString();
-
-                } catch (IOException e) {
-                    return "Error al cargar historial (conexión).";
-                } catch (Exception e) {
-                    return "Error al cargar historial.";
+                    sb.append("───────────────────────────────\n\n");
                 }
-            }
 
-            @Override
-            protected void done() {
-                try {
-                    txtFact.setText(get());
-                } catch (Exception e) {
-                    txtFact.setText("Error al mostrar historial.");
-                }
+                return sb.toString();
+
+            } catch (IOException e) {
+                return "Error al cargar historial (conexión).";
+            } catch (Exception e) {
+                return "Error al cargar historial.";
             }
-        }.execute();
-    }
-  
+        }
+
+        @Override
+        protected void done() {
+            try {
+                txtFact.setText(get());
+            } catch (Exception e) {
+                txtFact.setText("Error al mostrar historial.");
+            }
+        }
+    }.execute();
+}  
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

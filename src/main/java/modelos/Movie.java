@@ -2,6 +2,7 @@ package modelos;
 
 public class Movie {
     
+    private String id;
     private String nombre;
     private String descripcion;
     private String clasificacion;
@@ -11,7 +12,8 @@ public class Movie {
     private String trailer;
     private String duracion;
 
-    public Movie(String nombre, String descripcion, String clasificacion, String reparto, String director, String rutaImagen, String trailer, String duracion) {
+    public Movie(String id, String nombre, String descripcion, String clasificacion, String reparto, String director, String rutaImagen, String trailer, String duracion) {
+        this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.clasificacion = clasificacion;
@@ -20,6 +22,14 @@ public class Movie {
         this.rutaImagen = rutaImagen;
         this.trailer = trailer;
         this.duracion = duracion;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNombre() {
