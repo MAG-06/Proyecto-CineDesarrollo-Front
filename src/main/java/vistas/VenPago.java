@@ -204,8 +204,8 @@ public class VenPago extends javax.swing.JFrame {
         Random ra = new Random();  
         try {
             
-        if (carrito == null || carrito.getCombos() == null || carrito.getCombos().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Tu carrito no tiene combos.");
+        if (carrito == null) {
+            JOptionPane.showMessageDialog(this, "Tu carrito no tiene nada");
             return;
         }
         

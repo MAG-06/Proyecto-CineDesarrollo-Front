@@ -1,12 +1,16 @@
 package vistas;
 
+import Service.SalaServiceFront;
 import java.awt.Image;
+import java.io.IOException;
 import java.net.URL;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import modelos.Car;
 import modelos.Client;
+import modelos.Hall;
 import modelos.Movie;
 import modelos.Ticket;
 import service.CarritoServiceFront;
@@ -15,22 +19,27 @@ import service.CarritoServiceFront;
 public class VenCompra extends javax.swing.JFrame {
     
     private Movie p;
-    private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
-    private int numSala = 1;
     private Client cliente;
     private Car carrito;
+    private Hall sala;
+    
+    private final SalaServiceFront serviceSala = new SalaServiceFront();
+    private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
+ 
 
 
-    public VenCompra(Client cliente, Movie p,Car carrito) {
+    public VenCompra(Client cliente, Movie p,Car carrito, Hall sala) {
         initComponents();
         setLocationRelativeTo(this);
         txtUserEnSession.setText(cliente.getNombre());
         cargarComponentes(p);
         organizarImagen(lblPoster, p.getRutaImagen());
         this.p = p;
-        this.numSala = 1;
         this.cliente = cliente;
         this.carrito = carrito;
+        this.sala = sala;
+        selecSillas();
+        cargarSala();
     }
 
     @SuppressWarnings("unchecked")
@@ -61,45 +70,45 @@ public class VenCompra extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         txtReparto = new javax.swing.JTextArea();
         jPanel2 = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
-        jCheckBox6 = new javax.swing.JCheckBox();
-        jCheckBox7 = new javax.swing.JCheckBox();
-        jCheckBox8 = new javax.swing.JCheckBox();
-        jCheckBox9 = new javax.swing.JCheckBox();
-        jCheckBox10 = new javax.swing.JCheckBox();
-        jCheckBox11 = new javax.swing.JCheckBox();
-        jCheckBox12 = new javax.swing.JCheckBox();
-        jCheckBox13 = new javax.swing.JCheckBox();
-        jCheckBox14 = new javax.swing.JCheckBox();
-        jCheckBox15 = new javax.swing.JCheckBox();
-        jCheckBox16 = new javax.swing.JCheckBox();
-        jCheckBox17 = new javax.swing.JCheckBox();
-        jCheckBox18 = new javax.swing.JCheckBox();
-        jCheckBox19 = new javax.swing.JCheckBox();
-        jCheckBox20 = new javax.swing.JCheckBox();
-        jCheckBox22 = new javax.swing.JCheckBox();
-        jCheckBox23 = new javax.swing.JCheckBox();
-        jCheckBox25 = new javax.swing.JCheckBox();
-        jCheckBox26 = new javax.swing.JCheckBox();
-        jCheckBox27 = new javax.swing.JCheckBox();
-        jCheckBox28 = new javax.swing.JCheckBox();
-        jCheckBox29 = new javax.swing.JCheckBox();
-        jCheckBox30 = new javax.swing.JCheckBox();
-        jCheckBox31 = new javax.swing.JCheckBox();
-        jCheckBox32 = new javax.swing.JCheckBox();
-        jCheckBox33 = new javax.swing.JCheckBox();
-        jCheckBox34 = new javax.swing.JCheckBox();
-        jCheckBox35 = new javax.swing.JCheckBox();
-        jCheckBox36 = new javax.swing.JCheckBox();
-        jCheckBox37 = new javax.swing.JCheckBox();
-        jCheckBox38 = new javax.swing.JCheckBox();
-        jCheckBox39 = new javax.swing.JCheckBox();
-        jCheckBox40 = new javax.swing.JCheckBox();
-        jCheckBox41 = new javax.swing.JCheckBox();
+        chk38 = new javax.swing.JCheckBox();
+        chk37 = new javax.swing.JCheckBox();
+        chk36 = new javax.swing.JCheckBox();
+        chk35 = new javax.swing.JCheckBox();
+        chk34 = new javax.swing.JCheckBox();
+        chk33 = new javax.swing.JCheckBox();
+        chk32 = new javax.swing.JCheckBox();
+        chk31 = new javax.swing.JCheckBox();
+        chk30 = new javax.swing.JCheckBox();
+        chk29 = new javax.swing.JCheckBox();
+        chk28 = new javax.swing.JCheckBox();
+        chk27 = new javax.swing.JCheckBox();
+        chk26 = new javax.swing.JCheckBox();
+        chk25 = new javax.swing.JCheckBox();
+        chk24 = new javax.swing.JCheckBox();
+        chk23 = new javax.swing.JCheckBox();
+        chk22 = new javax.swing.JCheckBox();
+        chk18 = new javax.swing.JCheckBox();
+        chk19 = new javax.swing.JCheckBox();
+        chk17 = new javax.swing.JCheckBox();
+        chk16 = new javax.swing.JCheckBox();
+        chk4 = new javax.swing.JCheckBox();
+        chk13 = new javax.swing.JCheckBox();
+        chk21 = new javax.swing.JCheckBox();
+        chk39 = new javax.swing.JCheckBox();
+        chk10 = new javax.swing.JCheckBox();
+        chk11 = new javax.swing.JCheckBox();
+        chk20 = new javax.swing.JCheckBox();
+        chk12 = new javax.swing.JCheckBox();
+        chk8 = new javax.swing.JCheckBox();
+        chk9 = new javax.swing.JCheckBox();
+        chk7 = new javax.swing.JCheckBox();
+        chk14 = new javax.swing.JCheckBox();
+        chk5 = new javax.swing.JCheckBox();
+        chk6 = new javax.swing.JCheckBox();
+        chk15 = new javax.swing.JCheckBox();
+        chk3 = new javax.swing.JCheckBox();
+        chk2 = new javax.swing.JCheckBox();
+        chk1 = new javax.swing.JCheckBox();
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -334,97 +343,97 @@ public class VenCompra extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jCheckBox17)
+                                .addComponent(chk22)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox16)
+                                .addComponent(chk23)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox15)
+                                .addComponent(chk24)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox14)
+                                .addComponent(chk25)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox13))
+                                .addComponent(chk26))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jCheckBox41)
+                                .addComponent(chk1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox40)
+                                .addComponent(chk2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox39)
+                                .addComponent(chk3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox23)))
+                                .addComponent(chk4)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox36)
+                            .addComponent(chk5)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                            .addComponent(jCheckBox19)
+                                            .addComponent(chk19)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jCheckBox30))
+                                            .addComponent(chk20))
                                         .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addComponent(jCheckBox3)
+                                            .addComponent(chk36)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jCheckBox2)
+                                            .addComponent(chk37)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jCheckBox1)))
+                                            .addComponent(chk38)))
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(jCheckBox27)
-                                        .addComponent(jCheckBox26))
+                                        .addComponent(chk39)
+                                        .addComponent(chk21))
                                     .addGap(72, 72, 72))
                                 .addGroup(jPanel2Layout.createSequentialGroup()
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addComponent(jCheckBox12)
+                                            .addComponent(chk27)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jCheckBox11))
+                                            .addComponent(chk28))
                                         .addGroup(jPanel2Layout.createSequentialGroup()
-                                            .addComponent(jCheckBox29)
+                                            .addComponent(chk11)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jCheckBox31)))
+                                            .addComponent(chk12)))
                                     .addContainerGap()))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jCheckBox25)
-                            .addComponent(jCheckBox10))
+                            .addComponent(chk13)
+                            .addComponent(chk29))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(jCheckBox9)
+                                .addComponent(chk30)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox8)
+                                .addComponent(chk31)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox7)
+                                .addComponent(chk32)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox6)
+                                .addComponent(chk33)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox5)
+                                .addComponent(chk34)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox4))
+                                .addComponent(chk35))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jCheckBox37)
+                                        .addComponent(chk6)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox34)
+                                        .addComponent(chk7)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox32))
+                                        .addComponent(chk8))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jCheckBox35)
+                                        .addComponent(chk14)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox38)
+                                        .addComponent(chk15)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox22)))
+                                        .addComponent(chk16)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jCheckBox20)
+                                        .addComponent(chk17)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox18))
+                                        .addComponent(chk18))
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jCheckBox33)
+                                        .addComponent(chk9)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox28)))))
+                                        .addComponent(chk10)))))
                         .addGap(172, 172, 172))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -437,57 +446,57 @@ public class VenCompra extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jCheckBox36)
-                    .addComponent(jCheckBox23)
-                    .addComponent(jCheckBox39)
-                    .addComponent(jCheckBox40)
-                    .addComponent(jCheckBox41))
+                    .addComponent(chk5)
+                    .addComponent(chk4)
+                    .addComponent(chk3)
+                    .addComponent(chk2)
+                    .addComponent(chk1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox28)
-                            .addComponent(jCheckBox29)
-                            .addComponent(jCheckBox31)
-                            .addComponent(jCheckBox32)
-                            .addComponent(jCheckBox33)
-                            .addComponent(jCheckBox34))
+                            .addComponent(chk10)
+                            .addComponent(chk11)
+                            .addComponent(chk12)
+                            .addComponent(chk8)
+                            .addComponent(chk9)
+                            .addComponent(chk7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCheckBox18)
-                                    .addComponent(jCheckBox19)
-                                    .addComponent(jCheckBox20)
-                                    .addComponent(jCheckBox22)
-                                    .addComponent(jCheckBox25)
-                                    .addComponent(jCheckBox26)
-                                    .addComponent(jCheckBox35)
-                                    .addComponent(jCheckBox38))
+                                    .addComponent(chk18)
+                                    .addComponent(chk19)
+                                    .addComponent(chk17)
+                                    .addComponent(chk16)
+                                    .addComponent(chk13)
+                                    .addComponent(chk21)
+                                    .addComponent(chk14)
+                                    .addComponent(chk15))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCheckBox11, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jCheckBox12, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jCheckBox13, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jCheckBox14, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jCheckBox15, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jCheckBox16, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jCheckBox17, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addComponent(chk28, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(chk27, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(chk26, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(chk25, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(chk24, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(chk23, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(chk22, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCheckBox10)
-                                    .addComponent(jCheckBox9)
-                                    .addComponent(jCheckBox8)
-                                    .addComponent(jCheckBox7)
-                                    .addComponent(jCheckBox6)
-                                    .addComponent(jCheckBox5)
-                                    .addComponent(jCheckBox4)
-                                    .addComponent(jCheckBox1)
-                                    .addComponent(jCheckBox2)
-                                    .addComponent(jCheckBox3)
-                                    .addComponent(jCheckBox27)))
-                            .addComponent(jCheckBox30)))
-                    .addComponent(jCheckBox37))
+                                    .addComponent(chk29)
+                                    .addComponent(chk30)
+                                    .addComponent(chk31)
+                                    .addComponent(chk32)
+                                    .addComponent(chk33)
+                                    .addComponent(chk34)
+                                    .addComponent(chk35)
+                                    .addComponent(chk38)
+                                    .addComponent(chk37)
+                                    .addComponent(chk36)
+                                    .addComponent(chk39)))
+                            .addComponent(chk20)))
+                    .addComponent(chk6))
                 .addGap(522, 522, 522))
         );
 
@@ -755,8 +764,85 @@ public class VenCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCarritoActionPerformed
 
     private void btnAgregarCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarCarritoActionPerformed
-        int cantidad = Integer.parseInt(txtNumSillas.getText());
-        
+     try {
+         
+         JCheckBox[] sillas = {
+            chk1, chk2, chk3, chk4, chk5, chk6, chk7, chk8, chk9, chk10,
+            chk11, chk12, chk13, chk14, chk15, chk16, chk17, chk18, chk19, chk20,
+            chk21, chk22, chk23, chk24, chk25, chk26, chk27, chk28, chk29, chk30,
+            chk31, chk32, chk33, chk34, chk35, chk36, chk37, chk38, chk39
+        };        
+         
+        // 0) Cantidad pedida
+        int cantidad;
+        try {
+            cantidad = Integer.parseInt(txtNumSillas.getText());
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(this, "Cantidad inválida.");
+            return;
+        }
+        if (cantidad <= 0) {
+            JOptionPane.showMessageDialog(this, "Selecciona la cantidad de sillas primero.");
+            return;
+        }
+
+        // 1) Reunir sillas seleccionadas (solo habilitadas)
+        java.util.List<Integer> seleccionados = new java.util.ArrayList<>();
+        for (int i = 0; i < sillas.length; i++) {
+            if (sillas[i].isEnabled() && sillas[i].isSelected()) {
+                seleccionados.add(i + 1);
+            }
+        }
+        if (seleccionados.size() != cantidad) {
+            JOptionPane.showMessageDialog(this, "Debes seleccionar exactamente " + cantidad + " sillas.");
+            return;
+        }
+
+        // 2) Reservar asientos (todo-o-nada)
+        int numSala = sala.getNumSala();
+        Hall.Dia dia = sala.getDiaPelicula();
+        String hora = sala.getHoraInicio().toString(); // "HH:mm"
+        boolean reservado = serviceSala.reservarSillas(numSala, dia, hora, seleccionados);
+        if (!reservado) {
+            JOptionPane.showMessageDialog(this, "Alguna silla ya fue ocupada. Actualizando estado…");
+            cargarSala(); // vuelve a cargar ocupación desde el server
+            return;
+        }
+
+        // 3) Agregar cada ticket llamando al backend (EL BACK CALCULA PRECIO Y TOTAL)
+        for (int asiento : seleccionados) {
+            // El precio lo calcula el backend, así que aquí puedes enviar 0 o ignorarlo
+            Ticket t = new Ticket(asiento, 14000, sala);
+
+            // CarritoServiceFront.agregarEntrada debe llamar a POST /api/carrito/entradas
+            Car actualizado = carritoSvc.agregarEntrada(carrito, t);
+            if (actualizado == null) {
+                JOptionPane.showMessageDialog(this, "No se pudo agregar la entrada al carrito.");
+                // opcional: podrías deshacer reservas si quieres, pero para el proyecto basta con informar
+                cargarSala();
+                return;
+            }
+            // Usa SIEMPRE el carrito devuelto por el backend (trae precioFinal recalculado)
+            carrito = actualizado;
+        }
+
+        JOptionPane.showMessageDialog(this, "Entradas agregadas al carrito: " + seleccionados);
+
+        // 4) Limpiar selección visual y cantidad
+        for (JCheckBox c : sillas) if (c.isEnabled()) c.setSelected(false);
+        txtNumSillas.setText("0");
+
+        // 5) Refrescar ocupación (ya deberían aparecer como ocupadas)
+        cargarSala();
+
+        // 6) Si tienes una ventana de carrito con método refresh, úsalo:
+        // venCarrito.refresh(cliente, carrito);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    } finally {
+        btnAgregarCarrito.setEnabled(true);
+    }
     }//GEN-LAST:event_btnAgregarCarritoActionPerformed
 
     private void txtNumSillasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNumSillasActionPerformed
@@ -793,6 +879,62 @@ public class VenCompra extends javax.swing.JFrame {
             }
     }
     
+    public void selecSillas() {
+
+        JCheckBox[] sillas = {
+            chk1, chk2, chk3, chk4, chk5, chk6, chk7, chk8, chk9, chk10,
+            chk11, chk12, chk13, chk14, chk15, chk16, chk17, chk18, chk19, chk20,
+            chk21, chk22, chk23, chk24, chk25, chk26, chk27, chk28, chk29, chk30,
+            chk31, chk32, chk33, chk34, chk35, chk36, chk37, chk38, chk39
+        };
+
+        for (JCheckBox chk : sillas) {
+            chk.addActionListener(e -> {
+                int maxSillas = Integer.parseInt(txtNumSillas.getText());
+
+                int seleccionados = 0;
+                for (JCheckBox c : sillas) {
+                    if (c.isEnabled() && c.isSelected()) { // ← cuenta solo las habilitadas
+                        seleccionados++;
+                    }
+                }
+
+                if (seleccionados > maxSillas) {
+                    chk.setSelected(false);
+                    JOptionPane.showMessageDialog(this,
+                        "Solo puedes seleccionar " + maxSillas + " sillas.",
+                        "Límite alcanzado", JOptionPane.WARNING_MESSAGE);
+                }
+            });
+        }
+    }
+    
+    public void cargarSala() {
+        try {
+            
+        boolean[] estado = serviceSala.estadoSillas(sala.getNumSala(), sala.getDiaPelicula(), sala.getHoraInicio().toString()); 
+        
+        JCheckBox[] sillas = {
+            chk1, chk2, chk3, chk4, chk5, chk6, chk7, chk8, chk9, chk10,
+            chk11, chk12, chk13, chk14, chk15, chk16, chk17, chk18, chk19, chk20,
+            chk21, chk22, chk23, chk24, chk25, chk26, chk27, chk28, chk29, chk30,
+            chk31, chk32, chk33, chk34, chk35, chk36, chk37, chk38, chk39
+        };
+            
+            for (int i = 0; i < estado.length && i < sillas.length; i++) {
+                boolean ocupada = estado[i];
+                JCheckBox cb = sillas[i];
+
+                cb.setSelected(ocupada);     
+                cb.setEnabled(!ocupada);    
+            }
+            
+        } catch (Exception e) {
+           JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());     
+        }
+    }
+    
+ 
     
   
 
@@ -809,45 +951,45 @@ public class VenCompra extends javax.swing.JFrame {
     private javax.swing.JButton btnPromociones;
     private javax.swing.JButton btnRestarSillas;
     private javax.swing.JButton btnSumarSIllas;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox10;
-    private javax.swing.JCheckBox jCheckBox11;
-    private javax.swing.JCheckBox jCheckBox12;
-    private javax.swing.JCheckBox jCheckBox13;
-    private javax.swing.JCheckBox jCheckBox14;
-    private javax.swing.JCheckBox jCheckBox15;
-    private javax.swing.JCheckBox jCheckBox16;
-    private javax.swing.JCheckBox jCheckBox17;
-    private javax.swing.JCheckBox jCheckBox18;
-    private javax.swing.JCheckBox jCheckBox19;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox20;
-    private javax.swing.JCheckBox jCheckBox22;
-    private javax.swing.JCheckBox jCheckBox23;
-    private javax.swing.JCheckBox jCheckBox25;
-    private javax.swing.JCheckBox jCheckBox26;
-    private javax.swing.JCheckBox jCheckBox27;
-    private javax.swing.JCheckBox jCheckBox28;
-    private javax.swing.JCheckBox jCheckBox29;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox30;
-    private javax.swing.JCheckBox jCheckBox31;
-    private javax.swing.JCheckBox jCheckBox32;
-    private javax.swing.JCheckBox jCheckBox33;
-    private javax.swing.JCheckBox jCheckBox34;
-    private javax.swing.JCheckBox jCheckBox35;
-    private javax.swing.JCheckBox jCheckBox36;
-    private javax.swing.JCheckBox jCheckBox37;
-    private javax.swing.JCheckBox jCheckBox38;
-    private javax.swing.JCheckBox jCheckBox39;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox40;
-    private javax.swing.JCheckBox jCheckBox41;
-    private javax.swing.JCheckBox jCheckBox5;
-    private javax.swing.JCheckBox jCheckBox6;
-    private javax.swing.JCheckBox jCheckBox7;
-    private javax.swing.JCheckBox jCheckBox8;
-    private javax.swing.JCheckBox jCheckBox9;
+    private javax.swing.JCheckBox chk1;
+    private javax.swing.JCheckBox chk10;
+    private javax.swing.JCheckBox chk11;
+    private javax.swing.JCheckBox chk12;
+    private javax.swing.JCheckBox chk13;
+    private javax.swing.JCheckBox chk14;
+    private javax.swing.JCheckBox chk15;
+    private javax.swing.JCheckBox chk16;
+    private javax.swing.JCheckBox chk17;
+    private javax.swing.JCheckBox chk18;
+    private javax.swing.JCheckBox chk19;
+    private javax.swing.JCheckBox chk2;
+    private javax.swing.JCheckBox chk20;
+    private javax.swing.JCheckBox chk21;
+    private javax.swing.JCheckBox chk22;
+    private javax.swing.JCheckBox chk23;
+    private javax.swing.JCheckBox chk24;
+    private javax.swing.JCheckBox chk25;
+    private javax.swing.JCheckBox chk26;
+    private javax.swing.JCheckBox chk27;
+    private javax.swing.JCheckBox chk28;
+    private javax.swing.JCheckBox chk29;
+    private javax.swing.JCheckBox chk3;
+    private javax.swing.JCheckBox chk30;
+    private javax.swing.JCheckBox chk31;
+    private javax.swing.JCheckBox chk32;
+    private javax.swing.JCheckBox chk33;
+    private javax.swing.JCheckBox chk34;
+    private javax.swing.JCheckBox chk35;
+    private javax.swing.JCheckBox chk36;
+    private javax.swing.JCheckBox chk37;
+    private javax.swing.JCheckBox chk38;
+    private javax.swing.JCheckBox chk39;
+    private javax.swing.JCheckBox chk4;
+    private javax.swing.JCheckBox chk5;
+    private javax.swing.JCheckBox chk6;
+    private javax.swing.JCheckBox chk7;
+    private javax.swing.JCheckBox chk8;
+    private javax.swing.JCheckBox chk9;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
