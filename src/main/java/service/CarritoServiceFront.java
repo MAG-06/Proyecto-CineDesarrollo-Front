@@ -36,15 +36,6 @@ public class CarritoServiceFront {
         return resp.isSuccessful() ? resp.body() : null;
     }
 
-    public Car eliminarCombo(Car carrito, Food combo) throws IOException {
-        Map<String, Object> body = new HashMap<>();
-        body.put("carrito", carrito);
-        body.put("combo", combo);
-        
-        Call<Car> call = api.eliminarCombo(body);
-        Response<Car> resp = call.execute();
-        return resp.isSuccessful() ? resp.body() : null;
-    }
 
     // ========== ENTRADAS ==========
 
@@ -54,16 +45,6 @@ public class CarritoServiceFront {
         body.put("ticket", ticket);
         
         Call<Car> call = api.agregarEntrada(body);
-        Response<Car> resp = call.execute();
-        return resp.isSuccessful() ? resp.body() : null;
-    }
-
-    public Car eliminarEntrada(Car carrito, Ticket ticket) throws IOException {
-        Map<String, Object> body = new HashMap<>();
-        body.put("carrito", carrito);
-        body.put("ticket", ticket);
-        
-        Call<Car> call = api.eliminarEntrada(body);
         Response<Car> resp = call.execute();
         return resp.isSuccessful() ? resp.body() : null;
     }
