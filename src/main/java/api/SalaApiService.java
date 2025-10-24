@@ -43,10 +43,10 @@ public interface SalaApiService {
 
     @POST("api/salas/funcion/cancelar")
     Call<Void> cancelar(@Body Map<String, Object> body);
-
+    
     // 4) Administración / Limpieza
-    @POST("api/salas/funciones/limpiar-vencidas")
-    Call<Map<String, Object>> limpiarVencidas();
+    @POST("api/salas/{id}/limpiar")
+    Call<Map<String, Object>> limpiarSala(@Path("id") int idSala);
 
     // Crear función manual
     @POST("api/salas/funcion")

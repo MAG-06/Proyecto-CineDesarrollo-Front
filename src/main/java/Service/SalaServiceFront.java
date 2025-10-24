@@ -88,10 +88,14 @@ public class SalaServiceFront {
 
     // ---------- 4) Administración / Limpieza ----------
 
-    public Map<String, Object> limpiarFuncionesVencidas() throws IOException {
-        Call<Map<String, Object>> call = api.limpiarVencidas();
+    public boolean limpiarSalaPorIdOK(int idSala) throws IOException {
+        Call<Map<String, Object>> call = api.limpiarSala(idSala);
         Response<Map<String, Object>> resp = call.execute();
-        return resp.isSuccessful() ? resp.body() : null; // {"funcionesLimpias": N}
+
+        if (!resp.isSuccessful()) {
+            System.err.println("Error al limpiar sala: HTTP " + resp.code());
+        }
+        return resp.isSuccessful();
     }
 
     // ---------- Crear función manual ----------

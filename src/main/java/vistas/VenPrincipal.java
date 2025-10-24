@@ -20,6 +20,7 @@ public class VenPrincipal extends javax.swing.JFrame {
         this.cliente = cliente;
         this.carrito = carrito;
         txtUserEnSession.setText(cliente.getNombre());  
+        cargarImagenesPeliculas();
     }
 
 
@@ -279,51 +280,36 @@ public class VenPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMovie1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovie1ActionPerformed
-      try{
-       
-        Movie p = service.obtenerMovie("1");
-        String usser = txtUserEnSession.getText();
+
+        Movie p = obtenerPelicula("1");
         VenPelicula venPelicula = new VenPelicula(cliente, p, carrito);
         venPelicula.setVisible(true);
         this.dispose();
-      } catch(Exception e){
-          JOptionPane.showMessageDialog(null, "Error al cargar pelicula: " + e.getMessage(), "Error ", JOptionPane.ERROR_MESSAGE);
-      }
     }//GEN-LAST:event_btnMovie1ActionPerformed
     
     private void btnMovie2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovie2ActionPerformed
-       try{
-        Movie p = service.obtenerMovie("2");
-        String usser = txtUserEnSession.getText();
+
+        Movie p = obtenerPelicula("2");
         VenPelicula venPelicula = new VenPelicula(cliente, p, carrito);
         venPelicula.setVisible(true);
         this.dispose();       
-       } catch(Exception e){
-           JOptionPane.showMessageDialog(null, "Error al cargar pelicula: " + e.getMessage(), "Error ", JOptionPane.ERROR_MESSAGE);
-       }
+
     }//GEN-LAST:event_btnMovie2ActionPerformed
 
     private void btnMovie3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovie3ActionPerformed
-      try{
-        Movie p = service.obtenerMovie("3");
-        String usser = txtUserEnSession.getText();
+        Movie p = obtenerPelicula("3");
         VenPelicula venPelicula = new VenPelicula(cliente, p, carrito);
         venPelicula.setVisible(true);
         this.dispose(); 
-      } catch (Exception e){
-           JOptionPane.showMessageDialog(null, "Error al cargar pelicula: " + e.getMessage(), "Error ", JOptionPane.ERROR_MESSAGE);
-      }
     }//GEN-LAST:event_btnMovie3ActionPerformed
 
     private void btnCombosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombosActionPerformed
-        String usser = txtUserEnSession.getText();
-        VenCombos venCombos = new VenCombos(cliente, carrito);
+       VenCombos venCombos = new VenCombos(cliente, carrito);
         venCombos.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCombosActionPerformed
 
     private void btnMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMembresiaActionPerformed
-        String usser = txtUserEnSession.getText();
         VenMembresia venMembresia = new VenMembresia(cliente, carrito);
         venMembresia.setVisible(true);
         this.dispose();
@@ -331,15 +317,13 @@ public class VenPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMembresiaActionPerformed
 
     private void btnPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromocionesActionPerformed
-        String usser = txtUserEnSession.getText();
         VenPromo venPromo = new VenPromo(cliente, carrito);
         venPromo.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPromocionesActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
-        String usser = txtUserEnSession.getText();
-        VenPerfil venPerfil = new VenPerfil(cliente, carrito);
+       VenPerfil venPerfil = new VenPerfil(cliente, carrito);
         venPerfil.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPerfilActionPerformed
@@ -350,12 +334,38 @@ public class VenPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBotActionPerformed
 
     private void btnCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarritoActionPerformed
-        String usser = txtUserEnSession.getText();
         VenCarrito venCarrito = new VenCarrito(cliente, carrito);
         venCarrito.setVisible(true);
     }//GEN-LAST:event_btnCarritoActionPerformed
 
-  
+    public Movie obtenerPelicula(String id) {
+        Movie p = null;
+        
+        try {
+        p = service.obtenerMovie(id);
+        
+        if(p == null) {
+            JOptionPane.showMessageDialog(null, "Pelicula no encontrada");
+            return null;
+        }
+
+        } catch(Exception e) {
+          JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());   
+        }
+        
+        return p;   
+    }
+    
+    public void cargarImagenesPeliculas() {
+        Movie p1 = obtenerPelicula("1");
+        Movie p2 = obtenerPelicula("2");
+        Movie p3 = obtenerPelicula("3");
+        
+        btnMovie1.setIcon(new javax.swing.ImageIcon(getClass().getResource(p1.getRutaImagenBoton())));
+        btnMovie2.setIcon(new javax.swing.ImageIcon(getClass().getResource(p2.getRutaImagenBoton())));
+        btnMovie3.setIcon(new javax.swing.ImageIcon(getClass().getResource(p3.getRutaImagenBoton())));
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CbSelectCIty;
