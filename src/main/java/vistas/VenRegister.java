@@ -197,8 +197,6 @@ public class VenRegister extends javax.swing.JFrame {
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         try {
-            Random random = new Random();
-            int id = random.nextInt();
             String nombre = txtNombre.getText();
             String apellido = txtApellido.getText();
             int edad = Integer.valueOf(TxtEdad.getText());
@@ -215,7 +213,7 @@ public class VenRegister extends javax.swing.JFrame {
                 return;
             } else {
                 
-              Client cliente = new Client(rol, id, correo, contraseña, cedula, nombre, apellido, edad, ciudad, membresia, null);
+              Client cliente = new Client(rol,correo, contraseña, cedula, nombre, apellido, edad, ciudad, membresia, null);
               boolean ok = service.guardarCliente(cliente);
               
               if(ok) {
