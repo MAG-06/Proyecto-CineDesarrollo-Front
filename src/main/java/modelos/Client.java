@@ -12,8 +12,8 @@ public class Client extends User {
 	private boolean estadoMembresia;
 	private ArrayList<Bill> historial;
 	
-	public Client(String rol, int id, String correo, String contraseña, String cedula, String nombre, String apellido, int edad, String ciudad, boolean estadoMembresia, ArrayList<Bill> historial) {
-		super(rol, id, correo, contraseña);
+	public Client(String rol, String correo, String contraseña, String cedula, String nombre, String apellido, int edad, String ciudad, boolean estadoMembresia, ArrayList<Bill> historial) {
+		super(rol, correo, contraseña);
 		this.cedula = cedula;
 		this.nombre = nombre;
 		this.apellido = apellido;
