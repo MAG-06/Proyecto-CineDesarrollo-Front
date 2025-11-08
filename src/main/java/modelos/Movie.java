@@ -12,8 +12,9 @@ public class Movie {
     private String rutaImagenBoton;
     private String trailer;
     private String duracion;
+    private boolean estado;
 
-    public Movie(String id, String nombre, String descripcion, String clasificacion, String reparto, String director, String rutaImagen, String rutaImagenBoton, String trailer, String duracion) {
+    public Movie(String id, String nombre, String descripcion, String clasificacion, String reparto, String director, String rutaImagen, String rutaImagenBoton, String trailer, String duracion, boolean estado) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -24,6 +25,7 @@ public class Movie {
         this.rutaImagenBoton = rutaImagenBoton;
         this.trailer = trailer;
         this.duracion = duracion;
+        this.estado = estado;
     }
 
     public String getId() {
@@ -73,6 +75,18 @@ public class Movie {
     public void setRutaImagenBoton(String rutaImagenBoton) {
         this.rutaImagenBoton = rutaImagenBoton;
     }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    
+    
+    
     
 
 

@@ -236,7 +236,13 @@ public class VenPago extends javax.swing.JFrame {
            return;
         }
         
+        boolean vaciar = carritoService.vaciarCarrito(carrito);
+        if(!vaciar) {
+            JOptionPane.showMessageDialog(null, "El carrito no se ha podido vaciar");
+            return;
+        }
         this.carrito = new Car(ra.nextInt(3000) + 1, new ArrayList<Ticket>(), new ArrayList<Food>(), "CC", false, 0.0);
+        
 
         JOptionPane.showMessageDialog(this, "Gracias por su compra");
         this.dispose();
