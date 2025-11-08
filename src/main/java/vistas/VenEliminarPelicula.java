@@ -5,6 +5,7 @@
 package vistas;
 
 import Service.SalaServiceFront;
+import java.util.Random;
 import javax.swing.JOptionPane;
 import modelos.Movie;
 import service.MovieServiceFront;
@@ -262,11 +263,10 @@ public class VenEliminarPelicula extends javax.swing.JFrame {
         try {
             
         if(txtIdP1.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Ingrese el id de la pelicula a eliminar");
+            JOptionPane.showMessageDialog(null, "Ingrese el id de la pelicula a sacar de cartelera");
             return;
         }
         
-        String idPelicula1 = txtIdP1.getText();
         
         if(txtNombreP2.getText().isEmpty() || txtDescP2.getText().isEmpty() || txtClasiP2.getText().isEmpty()
             || txtRepP2.getText().isEmpty() || txtDirecP2.getText().isEmpty() || txtRutaPosterP2.getText().isEmpty() || txtRutaBotonP2.getText().isEmpty() || txtTraiP2.getText().isEmpty() || txtDuraP2.getText().isEmpty()) {
@@ -274,10 +274,21 @@ public class VenEliminarPelicula extends javax.swing.JFrame {
             return;
         }
         
-        boolean ok1 = serviceMovie.eliminarMovie(idPelicula1);
+        String idPelicula1 = txtIdP1.getText();
+        
+        Movie p1 = serviceMovie.obtenerMovie(idPelicula1);
+        
+        if(p1 == null) {
+           JOptionPane.showMessageDialog(null, "La pelicula a quitar de cartelera no existe"); 
+           return;
+        }
+        
+        p1.setEstado(false);
+
+        boolean ok1 = serviceMovie.editarMovie(idPelicula1, p1);
         
         if(!ok1) {
-           JOptionPane.showMessageDialog(null, "No se ha podido eliminar la pelicula " + idPelicula1);
+           JOptionPane.showMessageDialog(null, "No se ha podido quitar de cartelera la pelicula " + idPelicula1);
            return;
         }
         
@@ -293,7 +304,11 @@ public class VenEliminarPelicula extends javax.swing.JFrame {
          String trailer = txtTraiP2.getText();
          String duracion = txtDuraP2.getText();
          
-        Movie pelicula2 = new Movie(idPelicula1, nombre, descripcion, clasificacion, reparto, director, rutaImagenPoster, rutaImagenBoton, trailer, duracion);
+        Random ra = new Random();
+        int id = ra.nextInt(100)+1;
+        String idP2 = String.valueOf(id);
+         
+        Movie pelicula2 = new Movie(idP2, nombre, descripcion, clasificacion, reparto, director, rutaImagenPoster, rutaImagenBoton, trailer, duracion, true);
 
             
         boolean ok = serviceMovie.crearMovie(pelicula2);

@@ -1,5 +1,8 @@
 package vistas;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import modelos.Car;
 import modelos.Client;
@@ -12,7 +15,9 @@ public class VenPrincipal extends javax.swing.JFrame {
     
     private final MovieServiceFront service = new MovieServiceFront();
     private Client cliente;
-    private Car carrito;
+    private Car carrito;   
+    private Movie[] peliculas;
+
 
     public VenPrincipal(Client cliente, Car carrito) {
         initComponents();
@@ -20,6 +25,8 @@ public class VenPrincipal extends javax.swing.JFrame {
         this.cliente = cliente;
         this.carrito = carrito;
         txtUserEnSession.setText(cliente.getNombre());  
+        this.peliculas = new Movie[3];
+        definirPeliculas();
         cargarImagenesPeliculas();
     }
 
@@ -280,8 +287,9 @@ public class VenPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMovie1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovie1ActionPerformed
-
-        Movie p = obtenerPelicula("1");
+        
+        
+        Movie p = peliculas[0];
         VenPelicula venPelicula = new VenPelicula(cliente, p, carrito);
         venPelicula.setVisible(true);
         this.dispose();
@@ -289,7 +297,7 @@ public class VenPrincipal extends javax.swing.JFrame {
     
     private void btnMovie2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovie2ActionPerformed
 
-        Movie p = obtenerPelicula("2");
+        Movie p = peliculas[1];
         VenPelicula venPelicula = new VenPelicula(cliente, p, carrito);
         venPelicula.setVisible(true);
         this.dispose();       
@@ -297,7 +305,7 @@ public class VenPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMovie2ActionPerformed
 
     private void btnMovie3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovie3ActionPerformed
-        Movie p = obtenerPelicula("3");
+        Movie p = peliculas[2];
         VenPelicula venPelicula = new VenPelicula(cliente, p, carrito);
         venPelicula.setVisible(true);
         this.dispose(); 
@@ -338,34 +346,59 @@ public class VenPrincipal extends javax.swing.JFrame {
         venCarrito.setVisible(true);
     }//GEN-LAST:event_btnCarritoActionPerformed
 
-    public Movie obtenerPelicula(String id) {
-        Movie p = null;
-        
-        try {
-        p = service.obtenerMovie(id);
-        
-        if(p == null) {
-            JOptionPane.showMessageDialog(null, "Pelicula no encontrada");
-            return null;
-        }
+    public void definirPeliculas() {
+       try {
+           
+       int contador = 0;
+       List<Movie> peliculas1 = service.listarMovies();
+       for(int i = 0; i < peliculas1.size(); i++) {
+          Movie movie = peliculas1.get(i);
+          if(movie.isEstado()) {
+            peliculas[contador] = movie;  
+            contador ++;
+            if(contador == 3) {
+                break;
+            }
+          }
+       }
 
-        } catch(Exception e) {
-          JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());   
-        }
-        
-        return p;   
+       } catch (Exception e) {
+           JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+       }
     }
     
     public void cargarImagenesPeliculas() {
-        Movie p1 = obtenerPelicula("1");
-        Movie p2 = obtenerPelicula("2");
-        Movie p3 = obtenerPelicula("3");
-        
-        btnMovie1.setIcon(new javax.swing.ImageIcon(getClass().getResource(p1.getRutaImagenBoton())));
-        btnMovie2.setIcon(new javax.swing.ImageIcon(getClass().getResource(p2.getRutaImagenBoton())));
-        btnMovie3.setIcon(new javax.swing.ImageIcon(getClass().getResource(p3.getRutaImagenBoton())));
-        
+        try {
+          
+          JButton[] botonesP = new JButton[3];
+          botonesP[0] = btnMovie1;
+          botonesP[1] = btnMovie2;
+          botonesP[2] = btnMovie3;
+          Movie movie = null;
+
+          
+          for(int i = 0; i < peliculas.length; i++) {
+              movie = peliculas[i];
+              if(movie.isEstado()){              
+                JButton boton = botonesP[i];
+                boton.setIcon(new javax.swing.ImageIcon(getClass().getResource(movie.getRutaImagenBoton())));
+                
+                 
+              }
+                  
+          }
+
+        } catch (Exception e) {
+          JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+
     }
+    
+
+    
+    
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CbSelectCIty;
