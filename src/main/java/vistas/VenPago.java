@@ -1,6 +1,7 @@
 package vistas;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JOptionPane;
 import modelos.Client;
@@ -8,6 +9,8 @@ import service.CarritoServiceFront;
 import javax.swing.SwingWorker;
 import modelos.Bill;
 import modelos.Car;
+import modelos.Food;
+import modelos.Ticket;
 import service.ClienteServiceFront;
 
 public class VenPago extends javax.swing.JFrame {
@@ -204,7 +207,12 @@ public class VenPago extends javax.swing.JFrame {
         Random ra = new Random();  
         try {
             
-        if (carrito == null) {
+        if(carrito == null){
+            JOptionPane.showMessageDialog(this, "Tu carrito no se creo perfectamente");
+            return;
+        }
+            
+        if (carrito.getCombos().isEmpty() && carrito.getEntradas().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Tu carrito no tiene nada");
             return;
         }
@@ -228,10 +236,7 @@ public class VenPago extends javax.swing.JFrame {
            return;
         }
         
-        if(!carritoService.vaciarCarrito(carrito)) {
-          JOptionPane.showMessageDialog(this, "No se ha podido vaciar el carrito");   
-          return;
-        }
+        this.carrito = new Car(ra.nextInt(3000) + 1, new ArrayList<Ticket>(), new ArrayList<Food>(), "CC", false, 0.0);
 
         JOptionPane.showMessageDialog(this, "Gracias por su compra");
         this.dispose();
@@ -245,8 +250,6 @@ public class VenPago extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         JOptionPane.showMessageDialog(null, "Transaccion cancelada");
-        VenPrincipal venPrincipal = new VenPrincipal(cliente, carrito);
-        venPrincipal.setVisible(true);
         this.dispose();        
         
     }//GEN-LAST:event_btnCancelarActionPerformed
