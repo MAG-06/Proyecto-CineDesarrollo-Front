@@ -237,14 +237,25 @@ public class VenPago extends javax.swing.JFrame {
         }
         
         boolean vaciar = carritoService.vaciarCarrito(carrito);
+        
         if(!vaciar) {
-            JOptionPane.showMessageDialog(null, "El carrito no se ha podido vaciar");
+            JOptionPane.showMessageDialog(this, "No se pudo vaciar el carrito"); 
             return;
         }
+        
+
         this.carrito = new Car(ra.nextInt(3000) + 1, new ArrayList<Ticket>(), new ArrayList<Food>(), "CC", false, 0.0);
+        
+        if(carrito == null) {
+           JOptionPane.showMessageDialog(this, "Carrito quedo null");  
+           return;
+        }
+        
         
 
         JOptionPane.showMessageDialog(this, "Gracias por su compra");
+        VenPrincipal venPrincipal = new VenPrincipal(cliente, carrito);
+        venPrincipal.setVisible(true);
         this.dispose();
 
     } catch (IOException e) {
@@ -303,6 +314,11 @@ public class VenPago extends javax.swing.JFrame {
         sb.append("===========================\n");
         return sb.toString();
     }
+    
+
+    
+     
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

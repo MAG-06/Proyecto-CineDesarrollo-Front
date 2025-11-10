@@ -292,6 +292,7 @@ public class VenPromo1 extends javax.swing.JFrame {
         String usser = txtUserEnSession.getText();
         VenCarrito venCarrito = new VenCarrito(cliente, carrito);
         venCarrito.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnCarritoActionPerformed
 
     private void organizarImagen(JLabel label, String rutaImagen) {

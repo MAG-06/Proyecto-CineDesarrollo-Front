@@ -318,8 +318,13 @@ public class VenEliminarPelicula extends javax.swing.JFrame {
           return;
         }           
         
-
-        
+        boolean okReasignar = serviceSala.reasignarSalasDePelicula(idPelicula1, pelicula2.getId());
+        if (!okReasignar) {
+            JOptionPane.showMessageDialog(this, "No se pudieron reasignar las salas.");
+            return;
+        }
+        JOptionPane.showMessageDialog(this, "Salas reasignadas correctamente.");
+ 
         JOptionPane.showMessageDialog(null, "Pelicula agregada exitosamente");
             
         } catch(Exception e) {
