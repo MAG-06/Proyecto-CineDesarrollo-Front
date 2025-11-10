@@ -123,4 +123,17 @@ public class SalaServiceFront {
         }
     }    
     
+    public boolean reasignarSalasDePelicula(String movieIdVieja, String movieIdNueva) throws IOException {
+    Call<okhttp3.ResponseBody> call = api.reasignarSalas(movieIdVieja, movieIdNueva);
+    Response<okhttp3.ResponseBody> resp = call.execute();
+    if (!resp.isSuccessful()) {
+        System.err.println("Error al reasignar salas: HTTP " + resp.code());
+        return false;
+    }
+    // (Opcional) Leer el mensaje "Salas reasignadas: N"
+    // String msg = resp.body() != null ? resp.body().string() : "";
+    // System.out.println(msg);
+    return true;
+    }
+    
 }

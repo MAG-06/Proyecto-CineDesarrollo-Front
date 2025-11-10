@@ -392,9 +392,9 @@ public class VenCombos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBotActionPerformed
 
     private void btnCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarritoActionPerformed
-        String usser = txtUserEnSession.getText();
-        VenCarrito venCarrito = new VenCarrito(cliente, carrito);
+       VenCarrito venCarrito = new VenCarrito(cliente, carrito);
         venCarrito.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnCarritoActionPerformed
 
     private void btnCombo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombo2ActionPerformed

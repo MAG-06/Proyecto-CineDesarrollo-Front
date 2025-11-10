@@ -85,7 +85,7 @@
                           </Group>
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jPanel3" pref="0" max="32767" attributes="0"/>
+                              <Component id="jPanel3" pref="947" max="32767" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -186,7 +186,7 @@
                                   <Component id="jPanel5" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="365" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="370" max="-2" attributes="0"/>
                                   <Component id="btnEliminarPelicula" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -207,9 +207,9 @@
                                   <Component id="jScrollPane4" min="-2" pref="169" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="191" max="32767" attributes="0"/>
+                          <EmptySpace pref="166" max="32767" attributes="0"/>
                           <Component id="btnEliminarPelicula" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

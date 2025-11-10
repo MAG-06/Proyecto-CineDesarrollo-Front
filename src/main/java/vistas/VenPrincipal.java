@@ -344,6 +344,7 @@ public class VenPrincipal extends javax.swing.JFrame {
     private void btnCarritoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarritoActionPerformed
         VenCarrito venCarrito = new VenCarrito(cliente, carrito);
         venCarrito.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnCarritoActionPerformed
 
     public void definirPeliculas() {

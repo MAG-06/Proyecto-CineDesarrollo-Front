@@ -483,6 +483,7 @@ public class VenMembresia extends javax.swing.JFrame {
         String usser = txtUserEnSession.getText();
         VenCarrito venCarrito = new VenCarrito(cliente, carrito);
         venCarrito.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnCarritoActionPerformed
  
     

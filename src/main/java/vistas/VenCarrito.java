@@ -201,6 +201,8 @@ public class VenCarrito extends javax.swing.JFrame {
     }//GEN-LAST:event_btnComprarActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        VenPrincipal venPrincipal = new VenPrincipal(cliente, carrito);
+        venPrincipal.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
