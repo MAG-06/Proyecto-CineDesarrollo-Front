@@ -7,6 +7,7 @@ package vistas;
 import Service.SalaServiceFront;
 import java.util.Random;
 import javax.swing.JOptionPane;
+import modelos.Hall;
 import modelos.Movie;
 import service.MovieServiceFront;
 
@@ -304,26 +305,25 @@ public class VenEliminarPelicula extends javax.swing.JFrame {
          String trailer = txtTraiP2.getText();
          String duracion = txtDuraP2.getText();
          
-        Random ra = new Random();
-        int id = ra.nextInt(100)+1;
-        String idP2 = String.valueOf(id);
          
-        Movie pelicula2 = new Movie(idP2, nombre, descripcion, clasificacion, reparto, director, rutaImagenPoster, rutaImagenBoton, trailer, duracion, true);
+        Movie pelicula2 = new Movie(nombre, descripcion, clasificacion, reparto, director, rutaImagenPoster, rutaImagenBoton, trailer, duracion, true);
 
             
-        boolean ok = serviceMovie.crearMovie(pelicula2);
+        Movie guardada = serviceMovie.crearMovie(pelicula2);
         
-        if(!ok) {
+        if(guardada == null || guardada.getId() <= 0) {
           JOptionPane.showMessageDialog(null, "No se ha podido guardar la nueva pelicula");
           return;
         }           
         
-        boolean okReasignar = serviceSala.reasignarSalasDePelicula(idPelicula1, pelicula2.getId());
-        if (!okReasignar) {
-            JOptionPane.showMessageDialog(this, "No se pudieron reasignar las salas.");
+        System.out.println("ID de la película creada: " + guardada.getId());
+        
+        boolean okFunciones = serviceSala.crearFuncionesPorDefectoAuto(guardada.getId(), 39);
+        
+        if(!okFunciones) {
+            JOptionPane.showMessageDialog(null, "No se pudieron crear las funciones por defecto");
             return;
         }
-        JOptionPane.showMessageDialog(this, "Salas reasignadas correctamente.");
  
         JOptionPane.showMessageDialog(null, "Pelicula agregada exitosamente");
             

@@ -29,10 +29,17 @@ public class MovieServiceFront {
         return response.isSuccessful() ? response.body() : null;
     }
 
-    public boolean crearMovie(Movie movie) throws IOException {
+    public Movie crearMovie(Movie movie) throws IOException {
         Call<Movie> call = api.crearMovie(movie);
-        Response<Movie> response = call.execute();
-        return response.isSuccessful();
+        Response<Movie> resp = call.execute();
+        if (!resp.isSuccessful()) {
+            System.err.println("Error al crear película: HTTP " + resp.code());
+            if (resp.errorBody()!=null) System.err.println(resp.errorBody().string());
+            return null;
+        }
+        Movie body = resp.body();
+        System.out.println("Película creada id=" + (body!=null? body.getId(): -1));
+        return body;
     }
 
     public boolean editarMovie(String id, Movie movie) throws IOException {
