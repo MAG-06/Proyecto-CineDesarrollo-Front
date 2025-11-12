@@ -2,7 +2,7 @@ package modelos;
 
 public class Movie {
     
-    private String id;
+    private int id;
     private String nombre;
     private String descripcion;
     private String clasificacion;
@@ -13,9 +13,10 @@ public class Movie {
     private String trailer;
     private String duracion;
     private boolean estado;
+    
+    public Movie() {}
 
-    public Movie(String id, String nombre, String descripcion, String clasificacion, String reparto, String director, String rutaImagen, String rutaImagenBoton, String trailer, String duracion, boolean estado) {
-        this.id = id;
+    public Movie(String nombre, String descripcion, String clasificacion, String reparto, String director, String rutaImagen, String rutaImagenBoton, String trailer, String duracion, boolean estado) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.clasificacion = clasificacion;
@@ -28,11 +29,11 @@ public class Movie {
         this.estado = estado;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

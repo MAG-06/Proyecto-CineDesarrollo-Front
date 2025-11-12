@@ -51,12 +51,14 @@ public interface SalaApiService {
     // Crear función manual
     @POST("api/salas/funcion")
     Call<Hall> crearFuncion(@Body Map<String, Object> body);
-    
-    @POST("api/salas/reasignar")
-    Call<okhttp3.ResponseBody> reasignarSalas(
-        @Query("movieIdVieja") String movieIdVieja,
-        @Query("movieIdNueva") String movieIdNueva
+
+    @POST("api/salas/crear-por-defecto/auto")
+    Call<Map<String, Object>> crearFuncionesPorDefectoAuto(
+        @Query("movieId") Integer movieId,
+        @Query("capacidad") Integer capacidad
     );
+    
+    
 
     
 }

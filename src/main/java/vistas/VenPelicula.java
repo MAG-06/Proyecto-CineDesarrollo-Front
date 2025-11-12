@@ -1002,16 +1002,8 @@ public class VenPelicula extends javax.swing.JFrame {
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         try {
           
-        int numSala;    
-
-        if("1".equals(p.getId())) {
-           numSala = 1;
-        } else if("2".equals(p.getId())) {
-           numSala = 2; 
-        } else {
-          numSala = 3;   
-        }
-        
+        int numSala = p.getId();
+ 
         Hall.Dia dia = null;  
         String hora = null; 
         

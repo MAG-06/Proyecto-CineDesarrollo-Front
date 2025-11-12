@@ -121,19 +121,19 @@ public class SalaServiceFront {
             System.err.println("Error al crear función: HTTP " + resp.code());
             return null;
         }
-    }    
+    }
+
+    public boolean crearFuncionesPorDefectoAuto(Integer movieId, Integer capacidad) throws IOException {
+        Call<Map<String, Object>> call = api.crearFuncionesPorDefectoAuto(movieId, capacidad);
+        Response<Map<String, Object>> resp = call.execute();
+        if (!resp.isSuccessful()) {
+            System.err.println("Error al crear funciones auto: HTTP " + resp.code());
+            if (resp.errorBody()!=null) System.err.println(resp.errorBody().string());
+            return false;
+        }
+        return true;
+    }  
     
-    public boolean reasignarSalasDePelicula(String movieIdVieja, String movieIdNueva) throws IOException {
-    Call<okhttp3.ResponseBody> call = api.reasignarSalas(movieIdVieja, movieIdNueva);
-    Response<okhttp3.ResponseBody> resp = call.execute();
-    if (!resp.isSuccessful()) {
-        System.err.println("Error al reasignar salas: HTTP " + resp.code());
-        return false;
-    }
-    // (Opcional) Leer el mensaje "Salas reasignadas: N"
-    // String msg = resp.body() != null ? resp.body().string() : "";
-    // System.out.println(msg);
-    return true;
-    }
+    
     
 }
