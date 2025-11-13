@@ -18,7 +18,7 @@ public class VenCarrito extends javax.swing.JFrame {
     private final ComboServiceFront ComboService = new ComboServiceFront();
    
     public VenCarrito(Client cliente, Car carrito) {
-        initComponents();
+        initComponents();  
         setLocationRelativeTo(this);
         this.cliente = cliente;   
         this.carrito = carrito;

@@ -288,56 +288,51 @@ public class VenPromo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarteleraActionPerformed
-        String usser = txtUserEnSession.getText();
+
         VenPrincipal venPrincipal = new VenPrincipal(cliente, carrito);
         venPrincipal.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCarteleraActionPerformed
 
     private void btnMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMembresiaActionPerformed
-        String usser = txtUserEnSession.getText();
+   
         VenMembresia venMembresia = new VenMembresia(cliente, carrito);
         venMembresia.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnMembresiaActionPerformed
 
     private void btnCombosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCombosActionPerformed
-        String usser = txtUserEnSession.getText();
+
         VenCombos venCombos = new VenCombos(cliente, carrito);
         venCombos.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnCombosActionPerformed
 
     private void btnPromo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromo2ActionPerformed
-        String usser = txtUserEnSession.getText();
         VenPromo2 venPromo2 = new VenPromo2(cliente, carrito);
         venPromo2.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPromo2ActionPerformed
 
     private void btnPromo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromo1ActionPerformed
-        String usser = txtUserEnSession.getText();
         VenPromo1 venPromo1 = new VenPromo1(cliente, carrito);
         venPromo1.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPromo1ActionPerformed
 
     private void btnPromo3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromo3ActionPerformed
-        String usser = txtUserEnSession.getText();
         VenPromo3 venPromo3 = new VenPromo3(cliente, carrito);
         venPromo3.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPromo3ActionPerformed
 
     private void btnPromo4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromo4ActionPerformed
-        String usser = txtUserEnSession.getText();
         VenPromo4 venPromo4 = new VenPromo4(cliente, carrito);
         venPromo4.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnPromo4ActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
-        String usser = txtUserEnSession.getText();
         VenPerfil venPerfil = new VenPerfil(cliente, carrito);
         venPerfil.setVisible(true);
         this.dispose();

@@ -271,49 +271,7 @@ public class VenPago extends javax.swing.JFrame {
         
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-  
-    
-    private String construirFacturaDesdeCar(modelos.Client cliente, modelos.Car car, String metodoPago) {
-        if (car == null) return "No se pudo obtener el carrito.";
 
-        StringBuilder sb = new StringBuilder();
-        sb.append("========= FACTURA =========\n");
-        sb.append("Cliente: ").append(cliente != null ? cliente.getNombre() : "N/D").append("\n");
-        sb.append("ID Carrito: ").append(car.getIdCarrito()).append("\n\n");
-
-        sb.append("Entradas:\n");
-        if (car.getEntradas() != null && !car.getEntradas().isEmpty()) {
-            int i = 1;
-            for (modelos.Ticket t : car.getEntradas()) {
-                sb.append("  ").append(i++).append(") ")
-                  .append("Sala ").append(t.getSala() != null ? t.getSala().getNumSala() : "?")
-                  .append(" | Silla ").append(t.getNumEntrada())
-                  .append(" | $").append((long) t.getPrecioEntrada())
-                  .append("\n");
-            }
-        } else {
-            sb.append("  (No hay entradas)\n");
-        }
-
-        sb.append("\nCombos:\n");
-        if (car.getCombos() != null && !car.getCombos().isEmpty()) {
-            int i = 1;
-            for (modelos.Food f : car.getCombos()) {
-                sb.append("  ").append(i++).append(") ")
-                  .append(f.getDescripcion())
-                  .append(" | $").append((long) f.getPrecio())
-                  .append("\n");
-            }
-        } else {
-            sb.append("  (No hay combos)\n");
-        }
-
-        sb.append("\n---------------------------\n");
-        sb.append("TOTAL: $").append((long) car.getPrecioFinal()).append("\n");
-        sb.append("Método de pago: ").append(metodoPago != null ? metodoPago : "Pendiente").append("\n");
-        sb.append("===========================\n");
-        return sb.toString();
-    }
     
 
     

@@ -83,7 +83,6 @@ public class ClienteServiceFront {
         Call<Bill> call = api.agregarFacturaACliente(cedula, factura);
         Response<Bill> response = call.execute();
         if (response.isSuccessful() && response.code() == 201) {
-            System.out.println("Factura agregada correctamente.");
             return true;
         } else {
             System.err.println("Error al agregar la factura. Código: " + response.code());
