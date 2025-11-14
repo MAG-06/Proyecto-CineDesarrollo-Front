@@ -53,7 +53,7 @@ public class ClienteServiceFront {
         return response.isSuccessful();
     }
     
-        public Client buscarPorCorreoYContraseña(String correo, String contraseña) throws IOException {
+        /*public Client buscarPorCorreoYContraseña(String correo, String contraseña) throws IOException {
         Map<String, String> credenciales = new HashMap<>();
         credenciales.put("correo", correo);
         credenciales.put("contraseña", contraseña);
@@ -66,7 +66,7 @@ public class ClienteServiceFront {
         } else {
             return null;
         }
-    }
+    }*/
         
     public List<Bill> listarFacturasDelCliente(String cedula) throws IOException {
         Call<List<Bill>> call = api.listarFacturasDelCliente(cedula);
@@ -87,6 +87,26 @@ public class ClienteServiceFront {
         } else {
             System.err.println("Error al agregar la factura. Código: " + response.code());
             return false;
+        }
+    }
+    
+     public Client buscarPorCorreoYContraseña(String correo, String contraseña) throws IOException {
+        Map<String, String> credenciales = new HashMap<>();
+        credenciales.put("correo", correo);
+        credenciales.put("contraseña", contraseña);
+
+        Call<Client> call = api.login(credenciales);
+        Response<Client> response = call.execute();
+
+        if (response.isSuccessful()) {
+            // 200 OK → credenciales correctas, viene el objeto Client
+            return response.body();
+        } else {
+            // Por ejemplo, 401 → credenciales inválidas
+            System.err.println("Error en login. Código HTTP: " + response.code());
+            // Si quieres ver el mensaje: 
+            // System.err.println("Detalle: " + response.errorBody().string());
+            return null;
         }
     }
     
