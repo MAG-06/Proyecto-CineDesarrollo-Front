@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JOptionPane;
 import modelos.Client;
-import service.CarritoServiceFront;
-import javax.swing.SwingWorker;
 import modelos.Bill;
 import modelos.Car;
 import modelos.Food;
@@ -21,8 +19,6 @@ public class VenPago extends javax.swing.JFrame {
     private final modelos.Client cliente;
     private Car carrito;
     
-    
-
     public VenPago(Client cliente, Car carrito) {
         initComponents();
         this.cliente = cliente;
@@ -270,14 +266,6 @@ public class VenPago extends javax.swing.JFrame {
         this.dispose();        
         
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-
-    
-
-    
-     
-    
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;

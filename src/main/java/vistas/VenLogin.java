@@ -1,4 +1,3 @@
-
 package vistas;
 
 import java.io.IOException;
@@ -10,7 +9,6 @@ import modelos.Client;
 import modelos.Food;
 import modelos.Ticket;
 import service.ClienteServiceFront;
-
 
 public class VenLogin extends javax.swing.JFrame {
   

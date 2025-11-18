@@ -3,10 +3,6 @@ package api;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-/**
- *
- * @author sreye
- */
 public class ApiCombos {
     
     private static final String APICOMBOS_URL = "http://localhost:8080/";

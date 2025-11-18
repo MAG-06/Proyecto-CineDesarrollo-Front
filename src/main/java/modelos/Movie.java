@@ -85,10 +85,4 @@ public class Movie {
         this.estado = estado;
     }
 
-    
-    
-    
-    
-
-
 }

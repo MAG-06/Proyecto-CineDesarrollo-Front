@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Service;
 
 import api.ApiSala;
@@ -14,10 +10,6 @@ import modelos.Hall;
 import retrofit2.Call;
 import retrofit2.Response;
 
-/**
- *
- * @author Nimac
- */
 public class SalaServiceFront {
     
     private final SalaApiService api;
@@ -25,8 +17,6 @@ public class SalaServiceFront {
     public SalaServiceFront() {
         this.api = ApiSala.getSala().create(SalaApiService.class);
     }
-
-    // ---------- 1) Cartelera / Listados ----------
 
     public List<Hall> carteleraPorDia(Hall.Dia dia) throws IOException {
         Call<List<Hall>> call = api.carteleraPorDia(dia);
@@ -46,21 +36,17 @@ public class SalaServiceFront {
         return resp.isSuccessful() ? resp.body() : null;
     }
 
-    // ---------- 2) Sillas / Disponibilidad ----------
-
     public boolean[] estadoSillas(int sala, Hall.Dia dia, String horaInicioHHmm) throws IOException {
         Call<boolean[]> call = api.estadoSillas(sala, dia, horaInicioHHmm);
         Response<boolean[]> resp = call.execute();
         return resp.isSuccessful() ? resp.body() : null;
     }
 
-    // ---------- 3) Reservas / Cancelaciones ----------
-
     public boolean reservarSillas(int sala, Hall.Dia dia, String horaInicioHHmm, List<Integer> asientos) throws IOException {
         Map<String, Object> body = new HashMap<>();
         body.put("sala", sala);
-        body.put("dia", dia.name());              // backend espera string del enum
-        body.put("horaInicio", horaInicioHHmm);   // "HH:mm"
+        body.put("dia", dia.name());          
+        body.put("horaInicio", horaInicioHHmm);   
         body.put("asientos", asientos);
 
         Call<Void> call = api.reservar(body);
@@ -68,7 +54,7 @@ public class SalaServiceFront {
         if (!resp.isSuccessful()) {
             System.err.println("Error al reservar: HTTP " + resp.code());
         }
-        return resp.isSuccessful(); // 200 OK
+        return resp.isSuccessful(); 
     }
 
     public boolean cancelarSilla(int sala, Hall.Dia dia, String horaInicioHHmm, int asiento) throws IOException {
@@ -83,10 +69,10 @@ public class SalaServiceFront {
         if (!resp.isSuccessful()) {
             System.err.println("Error al cancelar: HTTP " + resp.code());
         }
-        return resp.isSuccessful(); // 200 OK
+        return resp.isSuccessful(); 
     }
 
-    // ---------- 4) Administración / Limpieza ----------
+    
 
     public boolean limpiarSalaPorIdOK(int idSala) throws IOException {
         Call<Map<String, Object>> call = api.limpiarSala(idSala);
@@ -97,8 +83,6 @@ public class SalaServiceFront {
         }
         return resp.isSuccessful();
     }
-
-    // ---------- Crear función manual ----------
 
     public Hall crearFuncion(int sala, String movieId, Hall.Dia dia,
                              String horaInicioHHmm, String horaFinHHmm, int capacidad) throws IOException {
@@ -115,7 +99,6 @@ public class SalaServiceFront {
         Response<Hall> resp = call.execute();
 
         if (resp.isSuccessful()) {
-            // 201 Created con el Hall
             return resp.body();
         } else {
             System.err.println("Error al crear función: HTTP " + resp.code());

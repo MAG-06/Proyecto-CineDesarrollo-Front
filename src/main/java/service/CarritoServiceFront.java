@@ -7,17 +7,12 @@ import modelos.Food;
 import retrofit2.Call;
 import retrofit2.Response;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import modelos.Bill;
 import modelos.Ticket;
 
-/**
- *
- * @author sreye
- */
+
 public class CarritoServiceFront {
     
     private final CarritoApiService api;
@@ -36,9 +31,6 @@ public class CarritoServiceFront {
         return resp.isSuccessful() ? resp.body() : null;
     }
 
-
-    // ========== ENTRADAS ==========
-
     public Car agregarEntrada(Car carrito, Ticket ticket) throws IOException {
         Map<String, Object> body = new HashMap<>();
         body.put("carrito", carrito);
@@ -49,13 +41,10 @@ public class CarritoServiceFront {
         return resp.isSuccessful() ? resp.body() : null;
     }
 
-    // ========== VACÍAR CARRITO ==========
-
     public boolean vaciarCarrito(Car carrito) throws IOException {
         Call<Void> call = api.vaciarCarrito(carrito);
         Response<Void> resp = call.execute();
         if (resp.isSuccessful()) {
-            // Vacía la instancia local para reflejar el cambio
             carrito.setIdCarrito(0);
             carrito.getCombos().clear();
             carrito.getEntradas().clear();
@@ -64,8 +53,6 @@ public class CarritoServiceFront {
         }
         return false;
     }
-
-    // ========== FINALIZAR COMPRA ==========
 
     public Bill agregarCarritoEnFactura(Car carrito, Bill factura) throws IOException {
         Map<String, Object> body = new HashMap<>();

@@ -55,8 +55,6 @@ public class Bill {
 
         public void setCarrito(Car carrito) {
             this.carrito = carrito;
-        }
-        
-        
+        }         
 
 }

@@ -7,7 +7,6 @@ import java.net.URL;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import modelos.Bill;
 import modelos.Client;
 import service.CarritoServiceFront;
@@ -23,8 +22,6 @@ public class VenPerfil extends javax.swing.JFrame {
     private Car carrito;
     private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
     private final ClienteServiceFront clienteService = new ClienteServiceFront();
-
-
 
     public VenPerfil(Client cliente, Car carrito) {
         this.cliente = cliente;
@@ -503,7 +500,6 @@ public class VenPerfil extends javax.swing.JFrame {
 
                     Car car = f.getCarrito();
                     if (car != null) {
-                        // COMBOS
                         List<Food> combos = car.getCombos();
                         if (combos != null && !combos.isEmpty()) {
                             sb.append("\n🍔 Combos:\n");
@@ -518,7 +514,6 @@ public class VenPerfil extends javax.swing.JFrame {
                             sb.append("\n🍔 Combos: ninguno\n");
                         }
 
-                        // ENTRADAS
                         List<Ticket> entradas = car.getEntradas();
                         if (entradas != null && !entradas.isEmpty()) {
                             sb.append("\n🎟️ Entradas:\n");

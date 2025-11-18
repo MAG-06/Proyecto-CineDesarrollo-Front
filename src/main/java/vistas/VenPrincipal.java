@@ -1,6 +1,5 @@
 package vistas;
 
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -287,8 +286,6 @@ public class VenPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMovie1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovie1ActionPerformed
-        
-        
         Movie p = peliculas[0];
         VenPelicula venPelicula = new VenPelicula(cliente, p, carrito);
         venPelicula.setVisible(true);
@@ -296,12 +293,10 @@ public class VenPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMovie1ActionPerformed
     
     private void btnMovie2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovie2ActionPerformed
-
         Movie p = peliculas[1];
         VenPelicula venPelicula = new VenPelicula(cliente, p, carrito);
         venPelicula.setVisible(true);
         this.dispose();       
-
     }//GEN-LAST:event_btnMovie2ActionPerformed
 
     private void btnMovie3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMovie3ActionPerformed
@@ -320,8 +315,7 @@ public class VenPrincipal extends javax.swing.JFrame {
     private void btnMembresiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMembresiaActionPerformed
         VenMembresia venMembresia = new VenMembresia(cliente, carrito);
         venMembresia.setVisible(true);
-        this.dispose();
-        
+        this.dispose();        
     }//GEN-LAST:event_btnMembresiaActionPerformed
 
     private void btnPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromocionesActionPerformed
@@ -395,13 +389,6 @@ public class VenPrincipal extends javax.swing.JFrame {
 
     }
     
-    
-
-    
-    
-    
-    
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CbSelectCIty;
     private javax.swing.JButton btnBot;
