@@ -1,11 +1,8 @@
-
 package vistas;
 
-import java.util.Random;
 import javax.swing.JOptionPane;
 import modelos.Client;
 import service.ClienteServiceFront;
-
 
 public class VenRegister extends javax.swing.JFrame {
     
@@ -15,7 +12,6 @@ public class VenRegister extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(this);
     }
-
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

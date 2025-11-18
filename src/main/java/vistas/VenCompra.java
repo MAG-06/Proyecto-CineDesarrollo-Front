@@ -2,7 +2,6 @@ package vistas;
 
 import Service.SalaServiceFront;
 import java.awt.Image;
-import java.io.IOException;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
@@ -25,8 +24,6 @@ public class VenCompra extends javax.swing.JFrame {
     
     private final SalaServiceFront serviceSala = new SalaServiceFront();
     private final CarritoServiceFront carritoSvc = new CarritoServiceFront();
- 
-
 
     public VenCompra(Client cliente, Movie p,Car carrito, Hall sala) {
         initComponents();
@@ -711,7 +708,6 @@ public class VenCompra extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMembresiaActionPerformed
 
     private void btnPromocionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPromocionesActionPerformed
-  
         VenPromo venPromo = new VenPromo(cliente, carrito);
         venPromo.setVisible(true);
         this.dispose();
@@ -741,8 +737,6 @@ public class VenCompra extends javax.swing.JFrame {
           txtNumSillas.setText(String.valueOf(numSillas));
         }
     }//GEN-LAST:event_btnRestarSillasActionPerformed
-
-
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
         int numSillas = Integer.parseInt(txtNumSillas.getText());
@@ -774,7 +768,6 @@ public class VenCompra extends javax.swing.JFrame {
             chk31, chk32, chk33, chk34, chk35, chk36, chk37, chk38, chk39
         };        
          
-        // 0) Cantidad pedida
         int cantidad;
         try {
             cantidad = Integer.parseInt(txtNumSillas.getText());
@@ -787,7 +780,6 @@ public class VenCompra extends javax.swing.JFrame {
             return;
         }
 
-        // 1) Reunir sillas seleccionadas (solo habilitadas)
         java.util.List<Integer> seleccionados = new java.util.ArrayList<>();
         for (int i = 0; i < sillas.length; i++) {
             if (sillas[i].isEnabled() && sillas[i].isSelected()) {
@@ -799,45 +791,34 @@ public class VenCompra extends javax.swing.JFrame {
             return;
         }
 
-        // 2) Reservar asientos (todo-o-nada)
         int numSala = sala.getNumSala();
         Hall.Dia dia = sala.getDiaPelicula();
-        String hora = sala.getHoraInicio().toString(); // "HH:mm"
+        String hora = sala.getHoraInicio().toString(); 
         boolean reservado = serviceSala.reservarSillas(numSala, dia, hora, seleccionados);
         if (!reservado) {
             JOptionPane.showMessageDialog(this, "Alguna silla ya fue ocupada. Actualizando estado…");
-            cargarSala(); // vuelve a cargar ocupación desde el server
+            cargarSala(); 
             return;
         }
 
-        // 3) Agregar cada ticket llamando al backend (EL BACK CALCULA PRECIO Y TOTAL)
         for (int asiento : seleccionados) {
-            // El precio lo calcula el backend, así que aquí puedes enviar 0 o ignorarlo
             Ticket t = new Ticket(asiento, 14000, sala);
 
-            // CarritoServiceFront.agregarEntrada debe llamar a POST /api/carrito/entradas
             Car actualizado = carritoSvc.agregarEntrada(carrito, t);
             if (actualizado == null) {
                 JOptionPane.showMessageDialog(this, "No se pudo agregar la entrada al carrito.");
-                // opcional: podrías deshacer reservas si quieres, pero para el proyecto basta con informar
                 cargarSala();
                 return;
             }
-            // Usa SIEMPRE el carrito devuelto por el backend (trae precioFinal recalculado)
             carrito = actualizado;
         }
 
         JOptionPane.showMessageDialog(this, "Entradas agregadas al carrito: " + seleccionados);
 
-        // 4) Limpiar selección visual y cantidad
         for (JCheckBox c : sillas) if (c.isEnabled()) c.setSelected(false);
         txtNumSillas.setText("0");
 
-        // 5) Refrescar ocupación (ya deberían aparecer como ocupadas)
         cargarSala();
-
-        // 6) Si tienes una ventana de carrito con método refresh, úsalo:
-        // venCarrito.refresh(cliente, carrito);
 
     } catch (Exception e) {
         JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
@@ -895,7 +876,7 @@ public class VenCompra extends javax.swing.JFrame {
 
                 int seleccionados = 0;
                 for (JCheckBox c : sillas) {
-                    if (c.isEnabled() && c.isSelected()) { // ← cuenta solo las habilitadas
+                    if (c.isEnabled() && c.isSelected()) { 
                         seleccionados++;
                     }
                 }
@@ -935,11 +916,6 @@ public class VenCompra extends javax.swing.JFrame {
         }
     }
     
- 
-    
-  
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CbSelectCIty;
     private javax.swing.JButton btnAgregarCarrito;

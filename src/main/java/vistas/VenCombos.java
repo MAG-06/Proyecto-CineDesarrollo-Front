@@ -1,12 +1,10 @@
 package vistas;
 
-import api.ComboApiService;
 import java.io.IOException;
 import modelos.Client;
 import service.CarritoServiceFront;
 import modelos.Car;
 import javax.swing.JOptionPane;
-import javax.swing.SwingWorker;
 import modelos.Food;
 import service.ComboServiceFront;
 

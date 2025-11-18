@@ -8,7 +8,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Response;
 
-
 public class MovieServiceFront {
 
     private final MovieApiService api;

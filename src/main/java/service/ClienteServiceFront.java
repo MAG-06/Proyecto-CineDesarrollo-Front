@@ -11,10 +11,6 @@ import modelos.Client;
 import retrofit2.Call;
 import retrofit2.Response;
 
-/**
- *
- * @author Nimac
- */
 public class ClienteServiceFront {
     
     private final ClienteApiService api; 
@@ -53,21 +49,6 @@ public class ClienteServiceFront {
         return response.isSuccessful();
     }
     
-        /*public Client buscarPorCorreoYContraseña(String correo, String contraseña) throws IOException {
-        Map<String, String> credenciales = new HashMap<>();
-        credenciales.put("correo", correo);
-        credenciales.put("contraseña", contraseña);
-
-        Call<Client> call = api.login(credenciales);
-        Response<Client> response = call.execute();
-
-        if (response.isSuccessful()) {
-            return response.body(); 
-        } else {
-            return null;
-        }
-    }*/
-        
     public List<Bill> listarFacturasDelCliente(String cedula) throws IOException {
         Call<List<Bill>> call = api.listarFacturasDelCliente(cedula);
         Response<List<Bill>> response = call.execute();
@@ -99,13 +80,9 @@ public class ClienteServiceFront {
         Response<Client> response = call.execute();
 
         if (response.isSuccessful()) {
-            // 200 OK → credenciales correctas, viene el objeto Client
             return response.body();
         } else {
-            // Por ejemplo, 401 → credenciales inválidas
             System.err.println("Error en login. Código HTTP: " + response.code());
-            // Si quieres ver el mensaje: 
-            // System.err.println("Detalle: " + response.errorBody().string());
             return null;
         }
     }

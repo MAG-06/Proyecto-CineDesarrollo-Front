@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package api;
 
 import java.util.List;
@@ -14,13 +10,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
-/**
- *
- * @author Nimac
- */
 public interface SalaApiService {
     
-    // 1) Cartelera / Listados
     @GET("api/salas/cartelera/{dia}")
     Call<List<Hall>> carteleraPorDia(@Path("dia") Hall.Dia dia);
 
@@ -31,24 +22,20 @@ public interface SalaApiService {
     @GET("api/salas/funcion")
     Call<Hall> obtenerFuncion(@Query("sala") int sala,
                               @Query("dia") Hall.Dia dia,
-                              @Query("horaInicio") String horaInicio /* "HH:mm" */);
+                              @Query("horaInicio") String horaInicio);
 
-    // 2) Sillas / Disponibilidad
     @GET("api/salas/funcion/sillas")
     Call<boolean[]> estadoSillas(@Query("sala") int sala, @Query("dia") Hall.Dia dia, @Query("horaInicio") String horaInicio /* "HH:mm" */);
 
-    // 3) Reservas / Cancelaciones
     @POST("api/salas/funcion/reservar")
     Call<Void> reservar(@Body Map<String, Object> body);
 
     @POST("api/salas/funcion/cancelar")
     Call<Void> cancelar(@Body Map<String, Object> body);
     
-    // 4) Administración / Limpieza
     @POST("api/salas/{id}/limpiar")
     Call<Map<String, Object>> limpiarSala(@Path("id") int idSala);
 
-    // Crear función manual
     @POST("api/salas/funcion")
     Call<Hall> crearFuncion(@Body Map<String, Object> body);
 
@@ -57,8 +44,5 @@ public interface SalaApiService {
         @Query("movieId") Integer movieId,
         @Query("capacidad") Integer capacidad
     );
-    
-    
-
     
 }

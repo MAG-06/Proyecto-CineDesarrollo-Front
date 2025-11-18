@@ -1,7 +1,5 @@
 package modelos;
 
-import java.time.LocalTime;
-
 public class Hall {
     
 	public enum Dia {

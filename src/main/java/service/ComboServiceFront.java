@@ -9,10 +9,6 @@ import modelos.Food;
 import retrofit2.Call;
 import retrofit2.Response;
 
-/**
- *
- * @author sreye
- */
 public class ComboServiceFront {
     
     private final ComboApiService api; 
@@ -43,7 +39,6 @@ public class ComboServiceFront {
         Call<Void> call = api.create(food);
         Response<Void> response = call.execute();
         return response.isSuccessful();
-    }    
-    
+    }       
     
 }

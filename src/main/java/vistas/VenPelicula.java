@@ -5,7 +5,6 @@ import java.awt.Desktop;
 import java.awt.Image;
 import java.net.URI;
 import java.net.URL;
-import java.time.LocalTime;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
@@ -19,8 +18,6 @@ import modelos.Movie;
 public class VenPelicula extends javax.swing.JFrame {
     
     private final SalaServiceFront serviceSala = new SalaServiceFront();
-    
-    
     private Movie p;
     private Client cliente;
     private Car carrito;
@@ -966,7 +963,7 @@ public class VenPelicula extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void CbSelectCItyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CbSelectCItyActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_CbSelectCItyActionPerformed
 
     private void btnCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarteleraActionPerformed
@@ -1113,7 +1110,6 @@ public class VenPelicula extends javax.swing.JFrame {
             chkLunes450, chkLunes930, chkMartes450, chkMartes930, chkMiercoles450, chkMiercoles930, chkJueves450, chkJueves930, chkViernes450, chkViernes930, chkSabado450, chkSabado930, chkDomingo450, chkDomingo930
         );
 
-        // Para que solo uno pueda estar seleccionado a la vez
         for (JCheckBox chk : lista) {
             chk.addActionListener(e -> {
                 if (chk.isSelected()) {

@@ -1,23 +1,12 @@
 package api;
 
-import java.util.List;
 import java.util.Map;
 import modelos.Bill;
 import modelos.Car;
-import modelos.Food;
-import modelos.Ticket;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
-import retrofit2.http.GET;
-import retrofit2.http.HTTP;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 
-/**
- *
- * @author sreye
- */
 public interface CarritoApiService {
     
     @POST("api/carrito/combos")

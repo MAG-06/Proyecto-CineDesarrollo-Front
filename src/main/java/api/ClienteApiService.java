@@ -7,11 +7,6 @@ import modelos.Bill;
 import retrofit2.Call;
 import retrofit2.http.*;
 
-
-/**
- *
- * @author Nimac
- */
 public interface ClienteApiService {
     
     @GET("api/clientes")

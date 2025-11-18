@@ -1,11 +1,8 @@
 package vistas;
 
-import java.io.IOException;
 import service.CarritoServiceFront;
 import modelos.Car;
 import modelos.Food;
-import javax.swing.SwingWorker;
-import javax.swing.JOptionPane;
 import modelos.Client;
 import modelos.Ticket;
 import service.ComboServiceFront;
@@ -213,7 +210,6 @@ public class VenCarrito extends javax.swing.JFrame {
            txtUser.setText(cliente != null ? cliente.getNombre() : "");
            txtIdCarrito.setText(String.valueOf(carrito.getIdCarrito()));
 
-           // Combos
            StringBuilder sbCombos = new StringBuilder();
            for (Food f : carrito.getCombos()) {
                sbCombos.append(f.getIdCombo()).append(" - ").append(f.getDescripcion())
@@ -221,7 +217,6 @@ public class VenCarrito extends javax.swing.JFrame {
            }
            txtCombos.setText(sbCombos.toString());
 
-           // Entradas
            StringBuilder sbTickets = new StringBuilder();
            for (Ticket t : carrito.getEntradas()) {
                sbTickets.append("Sala ").append(t.getSala().getNumSala())
